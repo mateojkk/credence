@@ -159,7 +159,7 @@ const TRUST_ROWS = [
   {
     term: "No oracle operators",
     detail:
-      "Attestation happens inside the EVM. xCredenceHub staticcalls Creditcoin's native Block Prover precompile (0x0FD2), so cross-chain facts are validated by the chain itself. There is no external signer to bribe, hack, or shut down.",
+      "Attestation happens inside the EVM. xCredenceHub calls Creditcoin's native Block Prover precompile (0x0FD2), so cross-chain facts are validated by the chain itself. There is no external signer to bribe, hack, or shut down.",
   },
   {
     term: "Synchronous finality",
@@ -169,7 +169,7 @@ const TRUST_ROWS = [
   {
     term: "Replay-proof by construction",
     detail:
-      "Every accepted attestation binds keccak(sourceChainId, txHash). The same receipt can never mint credit twice, across any borrower, on any chain.",
+      "Every accepted attestation binds keccak(chainKey, blockHeight, txIndex) on-chain. The same receipt can never mint credit twice, across any borrower, on any chain.",
   },
   {
     term: "Undercollateralized by math, not promises",
@@ -193,7 +193,7 @@ const FAQS = [
   },
   {
     q: "Can someone forge or replay a proof to inflate a score?",
-    a: "Forged proofs fail precompile verification outright. Replays are blocked on-chain: each processed attestation records keccak(sourceChainId, txHash), and duplicates revert. Score inflation would require actually repaying loans on a source chain, which is exactly the point.",
+    a: "Forged proofs fail precompile verification outright. Replays are blocked on-chain: each processed attestation records keccak(chainKey, blockHeight, txIndex), and duplicates revert. Score inflation would require actually repaying loans on a source chain, which is exactly the point.",
   },
   {
     q: "What happens if a borrower's position degrades?",
@@ -201,7 +201,7 @@ const FAQS = [
   },
   {
     q: "Is this live or a mockup?",
-    a: "Live. Contracts are deployed on Creditcoin CC3 Testnet (CC3 testnet) with seeded liquidity, the relayer listens to real Sepolia events, and every number in this app is read directly from on-chain state over JSON-RPC.",
+    a: "The protocol is live on Creditcoin CC3 Testnet with seeded liquidity: the credit scanner, borrow, and supply terminals read real on-chain state over JSON-RPC, and the demo profiles are genuine attested history you can verify on Blockscout. The proof explorer and playground are clearly-labeled local simulations (the native 0x0FD2 precompile only accepts real attested receipts), and the relayer that produces those receipts ships in this repo — run it with `cd relayer && npm run e2e`.",
   },
 ];
 
@@ -212,9 +212,9 @@ export default function LandingPage() {
     totalVerifiedVolumeUSD: 0,
     totalProofsVerified: 0,
     totalProfilesCreated: 0,
-    totalSuppliedUSD: 112500,
+    totalSuppliedUSD: 0,
     totalBorrowedUSD: 0,
-    avgCreditScore: 718,
+    avgCreditScore: 0,
   });
 
   useEffect(() => {
@@ -256,7 +256,7 @@ export default function LandingPage() {
               href="/visualizer"
               className="group inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              Watch a proof verify
+              See how a proof verifies
               <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
           </div>
@@ -318,7 +318,7 @@ export default function LandingPage() {
                   <span className="text-sm text-foreground">Attestor</span>
                   <span className="flex items-center gap-1.5 text-xs text-faint">
                     <span className="w-1.5 h-1.5 rounded-full bg-positive animate-pulse" />
-                    online · 0x0FD2
+                    online · 0x0FD2 · illustrative
                   </span>
                 </div>
               </div>
@@ -346,7 +346,7 @@ export default function LandingPage() {
                 </div>
                 <div className="flex items-center gap-2 pt-1 pl-1 text-faint">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                  awaiting next source-chain event…
+                  sample flow — live scans run in the app
                 </div>
               </div>
             </div>

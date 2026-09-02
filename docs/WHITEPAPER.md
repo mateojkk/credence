@@ -60,7 +60,7 @@ The precompile verifies:
 ### 3.2 Replay Protection Invariant
 To prevent double-counting or re-attestation of historical transactions, the Creditcoin hub enforces:
 
-$$\mathcal{H}_{\text{attest}} = \text{keccak256}(\text{sourceChainId} \mathbin{\Vert} \text{txHash})$$
+$$\mathcal{H}_{\text{attest}} = \text{keccak256}(\text{chainKey} \mathbin{\Vert} \text{blockHeight} \mathbin{\Vert} \text{txIndex})$$
 $$\text{require}(\text{processedAttestations}[\mathcal{H}_{\text{attest}}] == \text{false})$$
 
 ---
