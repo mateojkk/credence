@@ -1,0 +1,17 @@
+{
+  "network": "Creditcoin CC3 Testnet",
+  "chainId": 102031,
+  "rpc": "https://rpc.cc3-testnet.creditcoin.network/",
+  "explorer": "https://creditcoin-testnet.blockscout.com",
+  "deployer": "0xd81e22761aa08f85D6b2aA931384e60211dA7287",
+  "timestamp": "2026-08-26T11:48:02.153Z",
+  "blockProver": "0x0000000000000000000000000000000000000FD2",
+  "contracts": {
+    "xCredenceHub": "0x6F242C3b40C9C89D4400bB77F2Fd18D0dfCDF39e",
+    "xCredenceLendingPool": "0x1688e85a494B8a51fF9Cf2D71193767107bcBa9C",
+    "AIRiskSentinel": "0x7f3137F762D28eD5DC396Fc6d793eA7B3dDa98cd",
+    "SourceVault": "0x80fFF9bB1b9f3231CB7cB8e835F26cb217d1fBd3",
+    "xUSDC": "0x5Ee23f0D8CCe425F384Ea2576F6136b36589e4C6",
+    "xCTC": "0xA300cFaEcFd2AAC1e5Ab2dE6e1f3Ad6cF05D6256"
+  }
+}

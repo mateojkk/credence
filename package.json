@@ -1,0 +1,19 @@
+{
+  "name": "credence-monorepo",
+  "version": "1.0.0",
+  "description": "Credence Universal Cross-Chain Verifiable Credit Protocol",
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "cd frontend && npm start",
+    "test:contracts": "cd contracts && npm test",
+    "compile:contracts": "cd contracts && npm run compile",
+    "seed:profiles": "cd contracts && npm run seed:profiles",
+    "relayer": "cd relayer && npm run worker",
+    "sentinel": "cd relayer && npm run sentinel",
+    "install:all": "npm install --prefix contracts && npm install --prefix relayer && npm install --prefix frontend"
+  },
+  "keywords": ["creditcoin", "attestcoin", "usc", "cross-chain", "credit", "defi"],
+  "author": "Credence Labs",
+  "license": "MIT"
+}

@@ -1,0 +1,14 @@
+.env
+.env.local
+.env.*
+!.env.example
+node_modules/
+artifacts/
+cache/
+typechain-types/
+dist/
+.next/
+coverage/
+*.tsbuildinfo
+.DS_Store
+contracts/bin/

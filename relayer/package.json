@@ -1,0 +1,23 @@
+{
+  "name": "credence-relayer",
+  "version": "1.0.0",
+  "description": "Credence Off-Chain Attestcoin Proof Relayer & Autonomous AI Risk Sentinel",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts",
+    "worker": "ts-node src/proofWorker.ts",
+    "sentinel": "ts-node src/aiRiskEngine.ts",
+    "e2e": "ts-node src/e2eProve.ts"
+  },
+  "dependencies": {
+    "@gluwa/cc-next-query-builder": "^0.8.0",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.2"
+  }
+}
