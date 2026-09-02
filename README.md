@@ -21,7 +21,7 @@ In decentralized finance today, borrowing is strictly 100% to 200% overcollatera
 
 By utilizing Creditcoin's native **Block Prover precompile (`0x0FD2`)**, Credence allows borrowers with proven repayment histories on external chains (such as Ethereum, Sepolia, and Base) to submit Merkle Patricia Trie inclusion proofs directly to Creditcoin. Creditcoin validates these proofs synchronously on-chain in ~15 seconds without centralized oracles, mints a sovereign **Attested Credit Score (xCS: 300 to 850)**, and unlocks capital-efficient lending (up to **90% LTV**). 
 
-An autonomous **AI Risk Sentinel** continuously monitors cross-chain position health, generating Attestcoin proofs to trigger automated margin adjustments and trustless liquidations.
+An autonomous **AI Risk Sentinel** continuously monitors cross-chain position health, streaming attested risk telemetry on-chain and triggering trustless liquidations when health factors breach risk bands.
 
 ---
 
@@ -35,16 +35,16 @@ flowchart TD
     end
 
     subgraph Relayer ["Off-Chain Attestcoin Worker & AI Sentinel"]
-        Receipt -->|3. Fetches Header & Proof| SDK["@gluwa/usc-sdk + Proof Builder"]
+        Receipt -->|3. Fetches Header & Proof| SDK["@gluwa/cc-next-query-builder + Proof Builder API"]
         AI["Autonomous AI Risk Sentinel"] -->|Monitors Health Factors| SDK
     end
 
     subgraph Creditcoin ["Creditcoin Settlement Layer (Chain ID: 102031)"]
-        SDK -->|4. Submits Proof| Hub["CredenceHub.sol"]
+        SDK -->|4. Submits Proof| Hub["xCredenceHub.sol"]
         Hub -->|5. Cryptographic Validation| Precompile["0x0FD2 (Block Prover Precompile)"]
         Precompile -->|6. Validated in 1 Block (~15s)| Hub
         Hub -->|7. Dynamic LTV & Credit Tier Update| Scoring["Verifiable Credit Scoring Engine"]
-        Hub -->|8. Release Undercollateralized Loan| LendingPool["CredenceLendingPool.sol"]
+        Hub -->|8. Release Undercollateralized Loan| LendingPool["xCredenceLendingPool.sol"]
     end
 ```
 
@@ -110,7 +110,7 @@ Credence maps on-chain verifiable repayment history into a sovereign score from 
 - **Bronze Tier (550-649):** 65% max LTV (≥50 combined pts, e.g. $4,000+ volume [60 pts] OR 5 clean repayments [50 pts]).
 - **Silver Tier (650-719):** 75% max LTV + 100 bps APR discount (≥150 combined pts).
 - **Gold Tier (720-779):** 85% max LTV + 200 bps APR discount (≥220 combined pts).
-- **Platinum Tier (780-850):** **90% max LTV (Undercollateralized)** + 300 bps APR discount (≥280 combined pts; perfect 850 requires $13,334+ verified volume across 15 clean repayments).
+- **Platinum Tier (780-850):** **90% max LTV (Undercollateralized)** + 300 bps APR discount (≥280 combined pts; perfect 850 requires $14,000+ verified volume [200 pts] across 15 clean repayments [150 pts]).
 
 ---
 
@@ -119,6 +119,9 @@ Credence maps on-chain verifiable repayment history into a sovereign score from 
 ### Prerequisites
 - Node.js >= 18.0.0
 - npm or yarn
+- MetaMask (or any EIP-1193 wallet) for the interactive dApp
+
+**Status:** contracts test suite 11/11 passing · frontend production build clean · all contracts live on Creditcoin CC3 Testnet.
 
 ### 1. Smart Contracts & Test Suite
 ```bash
@@ -127,16 +130,26 @@ npm install
 npm test
 ```
 
-To run the live proof verification simulation script:
+To run the local proof-verification simulation (MockBlockProver on Hardhat):
 ```bash
 npm run demo:verify
+```
+
+To (re)seed the on-chain demo credit profiles used by the `/check` presets (owner-only; see script header for mechanism):
+```bash
+npm run seed:profiles
 ```
 
 ### 2. Off-Chain Relayer & AI Sentinel
 ```bash
 cd ../relayer
 npm install
-npm run worker
+cp .env.example .env   # fill in RELAYER_PRIVATE_KEY (testnet-funded wallet)
+```
+```bash
+npm run worker      # proof worker: fetch source receipts, build & submit attestations
+npm run sentinel    # AI Risk Sentinel daemon: health-factor telemetry + autonomous liquidation
+npm run e2e         # one-shot end-to-end: repay on Sepolia -> attestation on Creditcoin -> score update
 ```
 
 ### 3. Frontend Web Application
@@ -145,7 +158,23 @@ cd ../frontend
 npm install
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) to access the interactive dApp, Merkle proof visualizer, and judge playground.
+Open [http://localhost:3000](http://localhost:3000) to access the interactive dApp (credit scanner, borrow/supply terminals, proof explorer, judge playground, sentinel stream). The app reads live on-chain state even without a wallet connected.
+
+### Repository Structure
+```
+xcredence/
+├── contracts/            # Solidity 0.8.24 (Hardhat) — hub, pool, sentinel, source vault, mocks
+│   ├── src/creditcoin/   #   xCredenceHub, xCredenceLendingPool, AIRiskSentinel
+│   ├── src/source/       #   SourceVault (deployed on Sepolia)
+│   ├── src/crypto|libraries/ # RLPReader, MerklePatriciaVerifier, EvmV1Decoder
+│   ├── src/mocks/        #   local-only precompile emulators for tests
+│   ├── scripts/          #   deploy.ts, seed-demo-profiles.ts, verify-proof-demo.ts
+│   └── test/             #   11 passing tests (canonical proof flow, LTV, liquidation)
+├── relayer/              # TypeScript — canonical proof pipeline, AI risk engine, e2e runner
+├── frontend/             # Next.js 14 dApp — credit scanner, borrow/lend, proof explorer, sentinel
+├── scripts/              # root deploy/wallet utilities + precompile restore safety script
+└── docs/                 # whitepaper, architecture, pitch deck, demo script
+```
 
 ---
 

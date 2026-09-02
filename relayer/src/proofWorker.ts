@@ -36,7 +36,7 @@ export class AttestcoinProofWorker {
 
   /**
    * Generates a cryptographic Merkle inclusion proof for a source chain transaction.
-   * Matches @gluwa/usc-sdk format for Creditcoin precompile 0x0FD2.
+   * Matches @gluwa/cc-next-query-builder format for Creditcoin precompile 0x0FD2.
    */
   public async generateAttestcoinProof(
     sourceTxHash: string,

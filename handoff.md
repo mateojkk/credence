@@ -37,8 +37,8 @@ All smart contracts have been compiled with `solc 0.8.24` (`--via-ir --optimize`
 | Contract | Address | Explorer Link | Function |
 | :--- | :--- | :--- | :--- |
 | **Native Block Prover** | `0x0000000000000000000000000000000000000FD2` | [Blockscout](https://creditcoin-testnet.blockscout.com/address/0x0000000000000000000000000000000000000FD2) | Native Rust precompile verifying MPT inclusion proofs in ~15s |
-| **`CredenceHub`** | `0x6F242C3b40C9C89D4400bB77F2Fd18D0dfCDF39e` | [Blockscout](https://creditcoin-testnet.blockscout.com/address/0x6F242C3b40C9C89D4400bB77F2Fd18D0dfCDF39e) | Central settlement & verifiable credit score (xCS) computation hub |
-| **`CredenceLendingPool`** | `0x1688e85a494B8a51fF9Cf2D71193767107bcBa9C` | [Blockscout](https://creditcoin-testnet.blockscout.com/address/0x1688e85a494B8a51fF9Cf2D71193767107bcBa9C) | Multi-asset lending pool with dynamic LTV (50% to 90%) |
+| **`xCredenceHub`** | `0x6F242C3b40C9C89D4400bB77F2Fd18D0dfCDF39e` | [Blockscout](https://creditcoin-testnet.blockscout.com/address/0x6F242C3b40C9C89D4400bB77F2Fd18D0dfCDF39e) | Central settlement & verifiable credit score (xCS) computation hub |
+| **`xCredenceLendingPool`** | `0x1688e85a494B8a51fF9Cf2D71193767107bcBa9C` | [Blockscout](https://creditcoin-testnet.blockscout.com/address/0x1688e85a494B8a51fF9Cf2D71193767107bcBa9C) | Multi-asset lending pool with dynamic LTV (50% to 90%) |
 | **`AIRiskSentinel`** | `0x7f3137F762D28eD5DC396Fc6d793eA7B3dDa98cd` | [Blockscout](https://creditcoin-testnet.blockscout.com/address/0x7f3137F762D28eD5DC396Fc6d793eA7B3dDa98cd) | AI telemetry ingestion & autonomous liquidation coordinator |
 | **`SourceVault` (Sepolia)** | `0x80fFF9bB1b9f3231CB7cB8e835F26cb217d1fBd3` | [Etherscan](https://sepolia.etherscan.io/address/0x80fFF9bB1b9f3231CB7cB8e835F26cb217d1fBd3) | External gateway contract emitting verifiable repayment receipts |
 | **`xUSDC` (Credence USD)** | `0x5Ee23f0D8CCe425F384Ea2576F6136b36589e4C6` | [Blockscout](https://creditcoin-testnet.blockscout.com/address/0x5Ee23f0D8CCe425F384Ea2576F6136b36589e4C6) | Borrow/Supply asset (Price Oracle: $1.00 USD) |
@@ -73,7 +73,7 @@ Where:
 | **🥉 Bronze** | 550 – 649 | **65.0%** | 153% | 0.00% | ≥50 combined pts (e.g. $4,000+ volume [60 pts] OR 5 clean repayments [50 pts]) |
 | **🥈 Silver** | 650 – 719 | **75.0%** | 133% | -1.00% | ≥150 combined pts (e.g. $10,000+ volume OR 15 clean repayments) |
 | **🥇 Gold** | 720 – 779 | **85.0%** | 117% | -2.00% | ≥220 combined pts (e.g. $10,000+ volume [150 pts] & 7+ clean repayments [70 pts]) |
-| **💎 Platinum** | 780 – 850 | **90.0%** | **111% (Undercollat.)** | **-3.00%** | ≥280 combined pts ($13,334+ volume [200 pts] & 8+ clean repayments [80 pts]; max 850 at both caps) |
+| **💎 Platinum** | 780 – 850 | **90.0%** | **111% (Undercollat.)** | **-3.00%** | ≥280 combined pts ($14,000+ volume [200 pts] & 8+ clean repayments [80 pts]; max 850 at both caps) |
 
 ### C. Attestcoin Synchronous Proof Engine (Precompile 0x0FD2)
 1. **Event Emission:** A borrower repays a loan on Sepolia. `SourceVault.sol` logs `RepaymentLogged(borrower, loanId, token, amount, timestamp, metadataHash)`.

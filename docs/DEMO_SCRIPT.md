@@ -26,7 +26,7 @@
 - **Speaker:** "Let's look at how those scores are earned cryptographically."
 - **[Open the Proof Explorer `/visualizer`]**
 - **Speaker:** "Step 1: a borrower repays an obligation on Ethereum Sepolia. `SourceVault.sol` emits a deterministic `RepaymentLogged` receipt."
-- **Speaker:** "Step 2: the @gluwa/usc-sdk proof builder captures the transaction and generates a Merkle Patricia Trie inclusion proof against the block's receipts root."
+- **Speaker:** "Step 2: the @gluwa/cc-next-query-builder proof builder captures the transaction and generates a Merkle Patricia Trie inclusion proof against the block's receipts root."
 - **Speaker:** "Step 3 & 4: the proof is relayed to Creditcoin Testnet. `0x0FD2` synchronously validates inclusion and continuity on-chain in ~15 seconds—zero centralized oracles."
 - **Speaker:** "Each verified receipt updates the borrower's score. That's how the presets you just scanned became real, on-chain, verifiable credit. The explorer here walks the same path as a local simulation; live receipts flow through our relayer (`npm run e2e`)."
 

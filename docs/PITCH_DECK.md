@@ -36,7 +36,7 @@ Source Chain (Sepolia / Ethereum / Base)
  └─ Repayment / Invoice Settlement Tx Receipt
        │
        ▼
- Off-Chain Worker (@gluwa/usc-sdk)
+ Off-Chain Worker (@gluwa/cc-next-query-builder)
  └─ Generates Merkle Patricia Trie Proof against Block Header
        │
        ▼
@@ -84,7 +84,7 @@ Source Chain (Sepolia / Ethereum / Base)
 ---
 
 ## Slide 9: Roadmap & CEIP Milestones
-- **Phase 1 (Q3 2026 - Hackathon):** Testnet deployment on Creditcoin (102031) and Sepolia (11155111), `@gluwa/usc-sdk` relayer, interactive visualizer.
+- **Phase 1 (Q3 2026 - Hackathon):** Testnet deployment on Creditcoin (102031) and Sepolia (11155111), `@gluwa/cc-next-query-builder` relayer, interactive visualizer.
 - **Phase 2 (Q4 2026 - CEIP Incubation):** Security audit with CertiK, Mainnet dual-chain deployment, integration with top 3 RWA invoice providers.
 - **Phase 3 (Q1 2027):** Launch of Institutional Credit Line Facilities & Multi-Agent AI Sentinel Swarms.
 

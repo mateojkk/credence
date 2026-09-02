@@ -10,7 +10,7 @@ graph TB
     end
 
     subgraph OffChainLayer ["Off-Chain Relayer & AI Sentinel Suite"]
-        Worker["Attestcoin Proof Worker (@gluwa/usc-sdk)"]
+        Worker["Attestcoin Proof Worker (@gluwa/cc-next-query-builder)"]
         AI["Autonomous AI Risk Sentinel Agent"]
         TX --> Worker
         Worker --> Proof["Serialized Merkle & Continuity Proof"]
@@ -44,11 +44,11 @@ graph TB
 | Contract | Chain | Function |
 | :--- | :--- | :--- |
 | `SourceVault.sol` | Sepolia (`11155111`) | Emits deterministic event receipts for repayments and invoices |
-| `CredenceHub.sol` | Creditcoin (`102031`) | Verifies proofs via `0x0FD2`, computes credit score (xCS), manages tiers |
-| `CredenceLendingPool.sol` | Creditcoin (`102031`) | Multi-asset lending vault, handles undercollateralized loans |
+| `xCredenceHub.sol` | Creditcoin (`102031`) | Verifies proofs via `0x0FD2`, computes credit score (xCS), manages tiers |
+| `xCredenceLendingPool.sol` | Creditcoin (`102031`) | Multi-asset lending vault, handles undercollateralized loans |
 | `AIRiskSentinel.sol` | Creditcoin (`102031`) | Coordinates autonomous risk alerts and proof-backed liquidations |
 | `MockBlockProver.sol` | Local / Hardhat | Local emulator for precompile `0x0FD2` |
 
 ### 3. Off-Chain Relayer Daemon
-- Written in TypeScript using `@gluwa/usc-sdk`.
+- Written in TypeScript using `@gluwa/cc-next-query-builder` (Attestcoin SDK).
 - Extracts event logs, generates Merkle inclusion proofs, and broadcasts to Creditcoin testnet.
