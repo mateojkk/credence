@@ -158,14 +158,12 @@ npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) to access the interactive dApp (credit scanner, borrow/supply terminals, proof explorer, judge playground, sentinel stream). The app reads live on-chain state even without a wallet connected.
 
-### 4. Deploying to Vercel (Serverless Production)
-Credence is optimized for zero-config Vercel Serverless deployment:
+### 4. Deploying to Vercel (1-Click Zero-Config)
+Credence is pre-configured with a root `vercel.json` for instant deployment directly from the root repository:
 1. Import the repository on [Vercel](https://vercel.com/new).
-2. Set **Root Directory** to `frontend`.
+2. Click **Deploy** directly (Root Directory can stay default `./`, or optionally set to `frontend`).
 3. Framework Preset: **Next.js** (auto-detected).
-4. Build Command: `next build` (default).
-5. Output Directory: `.next` (default).
-6. Environment Variables: **None required** (the dApp connects to Creditcoin CC3 Testnet via public RPC over HTTPS).
+4. Environment Variables: **None required** (the dApp connects to Creditcoin CC3 Testnet via public RPC over HTTPS).
 
 ### Repository Structure
 ```

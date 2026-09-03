@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Credence Universal Cross-Chain Verifiable Credit Protocol",
   "scripts": {
-    "dev": "cd frontend && npm run dev",
-    "build": "cd frontend && npm run build",
-    "start": "cd frontend && npm start",
+    "dev": "npm run dev --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "start": "npm run start --prefix frontend",
     "test:contracts": "cd contracts && npm test",
     "compile:contracts": "cd contracts && npm run compile",
     "seed:profiles": "cd contracts && npm run seed:profiles",
