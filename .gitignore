@@ -12,3 +12,6 @@ coverage/
 *.tsbuildinfo
 .DS_Store
 contracts/bin/
+DEMO_SCRIPT.md
+docs/DEMO_SCRIPT.md
+*demo_script*

@@ -179,7 +179,7 @@ xcredence/
 ├── relayer/              # TypeScript — canonical proof pipeline, risk sentinel, e2e runner
 ├── frontend/             # Next.js 14 dApp — credit scanner, borrow/lend, proof explorer, sentinel
 ├── scripts/              # root deploy/wallet utilities + precompile restore safety script
-└── docs/                 # whitepaper, architecture, pitch deck, demo script
+└── docs/                 # whitepaper, architecture, pitch deck
 ```
 
 ---
@@ -188,7 +188,6 @@ xcredence/
 
 - 📄 **[Investor Pitch Deck (CEIP Fast-Track)](docs/PITCH_DECK.md)**
 - 📐 **[Technical Whitepaper](docs/WHITEPAPER.md)**
-- 🎥 **[3-Minute Hackathon Demo Script](docs/DEMO_SCRIPT.md)**
 - 🏛️ **[Technical Architecture & Specs](docs/ARCHITECTURE.md)**
 
 ---
