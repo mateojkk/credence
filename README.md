@@ -4,7 +4,6 @@
 [![Hackathon](https://img.shields.io/badge/BUIDL_CTC_2026-Fall_Submission-2563EB?style=for-the-badge)](https://creditcoin.org)
 [![Creditcoin Testnet](https://img.shields.io/badge/Creditcoin_Testnet-Chain_102031-06B6D4?style=for-the-badge)](https://creditcoin-testnet.blockscout.com/)
 [![Attestcoin Protocol](https://img.shields.io/badge/Attestcoin_Precompile-0x0FD2-10B981?style=for-the-badge)](https://docs.creditcoin.org/creditcoin-usc)
-[![License](https://img.shields.io/badge/License-MIT-8B5CF6?style=for-the-badge)](LICENSE)
 
 > **Submission for BUIDL CTC 2026 Fall (Creditcoin & Credit Labs)**  
 > **Track:** DeFi (Cross-Chain Verifiable Lending & Sovereign Credit History) — Grand Prize Candidate  
