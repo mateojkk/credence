@@ -95,12 +95,12 @@
 #### 🖥️ On Screen:
 * Scroll down to **"Your Loans & Repayments"** on [`/borrow`](file:///home/mateo/basement/xcredence/frontend/src/app/(app)/borrow/page.tsx). Show Loan #1 with the green **"Repay Loan"** button.
 * Click **"Repay Loan"**: Confirms on-chain. Collateral is immediately returned to the wallet.
-* Jump to [`/sentinel`](file:///home/mateo/basement/xcredence/frontend/src/app/(app)/sentinel/page.tsx): Show the **AI Risk Sentinel** radar, telemetry terminal, and live health factor monitor.
+* Jump to [`/sentinel`](file:///home/mateo/basement/xcredence/frontend/src/app/(app)/sentinel/page.tsx): Show the **Risk Sentinel** radar, telemetry terminal, and live health factor monitor.
 
 #### 🎙️ Voiceover:
 > *"When borrowers are ready to settle, they scroll to their active positions table. A single click on **Repay** burns the debt, immediately releases 100% of the collateral back to the borrower, and increments their successful repayment count on `xCredenceHub`, raising their score.*
 >
-> *And to ensure protocol solvency around the clock, our autonomous **AI Risk Sentinel** monitors active health factors against live market volatility, streaming telemetry and executing trustless liquidations the instant a position crosses the liquidation threshold."*
+> *And to ensure protocol solvency around the clock, our autonomous **Risk Sentinel** monitors active health factors against live market volatility, streaming telemetry and executing trustless liquidations the instant a position crosses the liquidation threshold."*
 
 ---
 
