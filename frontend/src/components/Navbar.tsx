@@ -58,6 +58,7 @@ const featureTabs = [
   { name: "Borrow", href: "/borrow" },
   { name: "Supply", href: "/lend" },
   { name: "Sentinel", href: "/sentinel" },
+  { name: "Faucet", href: "/faucet" },
 ];
 
 export const Navbar = () => {
@@ -214,7 +215,7 @@ export const Navbar = () => {
               onClick={walletConnected ? handleDisconnectWallet : handleConnectWallet}
               disabled={isConnecting}
               title={walletConnected ? "Disconnect" : undefined}
-              className="inline-flex items-center gap-2 rounded-lg border border-border px-3.5 py-2 text-sm font-medium text-foreground transition-[transform,color,border-color] hover:border-foreground/40 active:scale-[0.98] disabled:opacity-60"
+              className="inline-flex items-center gap-2 rounded-lg bg-surface-2 px-3.5 py-2 text-sm font-medium text-foreground transition-[transform,background-color] hover:bg-surface-2/80 active:scale-[0.98] disabled:opacity-60"
             >
               {walletConnected ? (
                 <>

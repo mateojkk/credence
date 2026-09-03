@@ -1,5 +1,5 @@
 # Credence Protocol 🚀
-### Universal Cross-Chain Verifiable Credit Protocol & Autonomous AI Risk Sentinel
+### Universal Cross-Chain Verifiable Credit Protocol & Autonomous Risk Management on Creditcoin
 
 [![Hackathon](https://img.shields.io/badge/BUIDL_CTC_2026-Fall_Submission-2563EB?style=for-the-badge)](https://creditcoin.org)
 [![Creditcoin Testnet](https://img.shields.io/badge/Creditcoin_Testnet-Chain_102031-06B6D4?style=for-the-badge)](https://creditcoin-testnet.blockscout.com/)
@@ -7,8 +7,7 @@
 [![License](https://img.shields.io/badge/License-MIT-8B5CF6?style=for-the-badge)](LICENSE)
 
 > **Submission for BUIDL CTC 2026 Fall (Creditcoin & Credit Labs)**  
-> **Primary Track:** DeFi (Cross-Chain Lending & Credit History)  
-> **Secondary Tracks:** AI (Autonomous Risk Sentinel) · RWA (Invoice Factoring)  
+> **Track:** DeFi (Cross-Chain Verifiable Lending & Sovereign Credit History) — Grand Prize Candidate  
 > **Target:** Grand Prize & Creditcoin Ecosystem Investment Program (CEIP) Fast-Track
 
 ---
@@ -21,7 +20,7 @@ In decentralized finance today, borrowing is strictly 100% to 200% overcollatera
 
 By utilizing Creditcoin's native **Block Prover precompile (`0x0FD2`)**, Credence allows borrowers with proven repayment histories on external chains (such as Ethereum, Sepolia, and Base) to submit Merkle Patricia Trie inclusion proofs directly to Creditcoin. Creditcoin validates these proofs synchronously on-chain in ~15 seconds without centralized oracles, mints a sovereign **Attested Credit Score (xCS: 300 to 850)**, and unlocks capital-efficient lending (up to **90% LTV**). 
 
-An autonomous **AI Risk Sentinel** continuously monitors cross-chain position health, streaming attested risk telemetry on-chain and triggering trustless liquidations when health factors breach risk bands.
+An autonomous on-chain **Risk Sentinel** continuously monitors cross-chain position health, streaming attested risk telemetry on-chain and triggering trustless liquidations when health factors breach risk bands.
 
 ---
 

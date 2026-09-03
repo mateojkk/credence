@@ -380,6 +380,63 @@ export async function requestFaucetTokens(tokenAddress: string, recipientAddress
   return await tx.wait();
 }
 
+// Helper to parse web3 and contract revert errors into clean, user-friendly messages
+export function formatTransactionError(err: any): string {
+  if (!err) return "Transaction failed";
+
+  const errString = `${err.message || ""} ${err.data || ""} ${err.shortMessage || ""} ${err.reason || ""}`;
+
+  if (
+    errString.includes("0xe450d38c") ||
+    errString.includes("ERC20InsufficientBalance") ||
+    errString.includes("Insufficient collateral balance") ||
+    errString.includes("Insufficient token balance")
+  ) {
+    return err.message && err.message.startsWith("Insufficient")
+      ? err.message
+      : "Insufficient token balance to complete this transaction. Please claim testnet tokens from the faucet.";
+  }
+
+  if (
+    errString.includes("0xfb8f41b2") ||
+    errString.includes("ERC20InsufficientAllowance")
+  ) {
+    return "Insufficient token allowance. Please approve the protocol to spend your tokens.";
+  }
+
+  if (
+    err.code === "ACTION_REJECTED" ||
+    err.code === 4001 ||
+    errString.includes("user rejected") ||
+    errString.includes("denied transaction signature")
+  ) {
+    return "Transaction was canceled in your wallet.";
+  }
+
+  if (errString.includes("Requested borrow exceeds dynamic Attested LTV limit")) {
+    return "Borrow amount exceeds your dynamic Attested LTV limit. Provide more collateral or reduce the borrow amount.";
+  }
+
+  if (errString.includes("Insufficient liquidity in reserve")) {
+    return "The lending pool currently does not have enough liquidity for this borrow amount.";
+  }
+
+  if (errString.includes("Zero amount")) {
+    return "Amount must be greater than zero.";
+  }
+
+  if (err.reason) return err.reason;
+  if (err.shortMessage) return err.shortMessage;
+  if (err.message) {
+    const cleanMsg = err.message.split("(action=")[0].replace(/execution reverted:? /i, "").trim();
+    if (cleanMsg && cleanMsg.length < 120 && !cleanMsg.includes("{")) {
+      return cleanMsg;
+    }
+  }
+
+  return "Transaction failed. Please check your token balance and try again.";
+}
+
 // Execute on-chain borrow
 export async function executeBorrow(
   collateralToken: string,
@@ -394,6 +451,7 @@ export async function executeBorrow(
 
   const provider = new ethers.BrowserProvider((window as any).ethereum);
   const signer = await provider.getSigner();
+  const userAddress = await signer.getAddress();
 
   const collateralContract = new ethers.Contract(collateralToken, ERC20_ABI, signer);
   const poolContract = new ethers.Contract(CONTRACT_ADDRESSES.xCredenceLendingPool, POOL_ABI, signer);
@@ -401,9 +459,18 @@ export async function executeBorrow(
   const parsedCollateral = ethers.parseUnits(collateralAmount.toString(), 18);
   const parsedBorrow = ethers.parseUnits(borrowAmount.toString(), 18);
 
+  // Check collateral balance first
+  const userBalance = await collateralContract.balanceOf(userAddress);
+  if (userBalance < parsedCollateral) {
+    const symbol = collateralToken.toLowerCase() === CONTRACT_ADDRESSES.xCTC.toLowerCase() ? "xCTC" : "xUSDC";
+    throw new Error(
+      `Insufficient ${symbol} balance. You need ${collateralAmount} ${symbol}, but only have ${Number(ethers.formatEther(userBalance)).toFixed(2)} ${symbol}. Please click (+ faucet) to claim test tokens.`
+    );
+  }
+
   // Check and approve collateral
   const allowance = await collateralContract.allowance(
-    await signer.getAddress(),
+    userAddress,
     CONTRACT_ADDRESSES.xCredenceLendingPool
   );
 
@@ -435,15 +502,25 @@ export async function executeRepay(loanId: number, amount: number, borrowTokenAd
 
   const provider = new ethers.BrowserProvider((window as any).ethereum);
   const signer = await provider.getSigner();
+  const userAddress = await signer.getAddress();
 
   const tokenContract = new ethers.Contract(borrowTokenAddress, ERC20_ABI, signer);
   const poolContract = new ethers.Contract(CONTRACT_ADDRESSES.xCredenceLendingPool, POOL_ABI, signer);
 
   const parsedAmount = ethers.parseUnits(amount.toString(), 18);
 
+  // Check repayment balance
+  const userBalance = await tokenContract.balanceOf(userAddress);
+  if (userBalance < parsedAmount) {
+    const symbol = borrowTokenAddress.toLowerCase() === CONTRACT_ADDRESSES.xUSDC.toLowerCase() ? "xUSDC" : "xCTC";
+    throw new Error(
+      `Insufficient ${symbol} balance for repayment. You need ${amount.toFixed(2)} ${symbol}, but only have ${Number(ethers.formatEther(userBalance)).toFixed(2)} ${symbol}.`
+    );
+  }
+
   // Approve repayment token
   const allowance = await tokenContract.allowance(
-    await signer.getAddress(),
+    userAddress,
     CONTRACT_ADDRESSES.xCredenceLendingPool
   );
 
@@ -467,14 +544,24 @@ export async function executeSupply(tokenAddress: string, amount: number) {
 
   const provider = new ethers.BrowserProvider((window as any).ethereum);
   const signer = await provider.getSigner();
+  const userAddress = await signer.getAddress();
 
   const token = new ethers.Contract(tokenAddress, ERC20_ABI, signer);
   const pool = new ethers.Contract(CONTRACT_ADDRESSES.xCredenceLendingPool, POOL_ABI, signer);
 
   const parsedAmount = ethers.parseUnits(amount.toString(), 18);
 
+  // Check supply balance
+  const userBalance = await token.balanceOf(userAddress);
+  if (userBalance < parsedAmount) {
+    const symbol = tokenAddress.toLowerCase() === CONTRACT_ADDRESSES.xUSDC.toLowerCase() ? "xUSDC" : "xCTC";
+    throw new Error(
+      `Insufficient ${symbol} balance. You need ${amount} ${symbol}, but only have ${Number(ethers.formatEther(userBalance)).toFixed(2)} ${symbol}. Please use the faucet to claim testnet tokens.`
+    );
+  }
+
   const allowance = await token.allowance(
-    await signer.getAddress(),
+    userAddress,
     CONTRACT_ADDRESSES.xCredenceLendingPool
   );
 
@@ -531,4 +618,22 @@ export async function submitCrossChainProof(
     [continuityProof.anchorHash, continuityProof.proofHashes]
   );
   return await tx.wait();
+}
+
+// Request browser wallet to track the ERC-20 token (MetaMask, Rabby, etc.)
+export async function addTokenToWallet(tokenAddress: string, symbol: string, decimals: number = 18) {
+  if (typeof window === "undefined" || !(window as any).ethereum) {
+    throw new Error("Wallet not connected");
+  }
+  return await (window as any).ethereum.request({
+    method: "wallet_watchAsset",
+    params: {
+      type: "ERC20",
+      options: {
+        address: tokenAddress,
+        symbol: symbol,
+        decimals: decimals,
+      },
+    },
+  });
 }

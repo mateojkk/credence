@@ -61,7 +61,9 @@ export const POOL_ABI = [
   "function supplierBalances(address token, address supplier) external view returns (uint256)",
   "event LoanOriginated(uint256 indexed loanId, address indexed borrower, address borrowToken, uint256 principalAmount, address collateralToken, uint256 collateralAmount, uint256 ltvBps, uint256 interestRateBps, uint256 dueDate)",
   "event LoanRepaid(uint256 indexed loanId, address indexed borrower, uint256 amountRepaid, bool fullyRepaid)",
-  "event PositionLiquidated(uint256 indexed loanId, address indexed borrower, address indexed liquidator, uint256 debtCovered, uint256 collateralSeized, bytes32 proofRef)"
+  "event PositionLiquidated(uint256 indexed loanId, address indexed borrower, address indexed liquidator, uint256 debtCovered, uint256 collateralSeized, bytes32 proofRef)",
+  "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+  "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)"
 ];
 
 export const ERC20_ABI = [
@@ -75,7 +77,13 @@ export const ERC20_ABI = [
   "function approve(address spender, uint256 amount) external returns (bool)",
   "function transferFrom(address sender, address recipient, uint256 amount) external returns (bool)",
   "function faucet(address to, uint256 amount) external",
-  "function mint(address to, uint256 amount) external"
+  "function mint(address to, uint256 amount) external",
+  "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+  "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+  "error ERC20InvalidSender(address sender)",
+  "error ERC20InvalidReceiver(address receiver)",
+  "error ERC20InvalidApprover(address approver)",
+  "error ERC20InvalidSpender(address spender)"
 ];
 
 export const SENTINEL_ABI = [

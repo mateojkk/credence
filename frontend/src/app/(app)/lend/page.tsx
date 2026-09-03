@@ -8,6 +8,7 @@ import {
   executeSupply,
   executeWithdraw,
   requestFaucetTokens,
+  formatTransactionError,
   PoolReserveData,
 } from "@/lib/web3";
 import {
@@ -88,7 +89,7 @@ export default function LendPage() {
       await loadData(userAddress);
     } catch (err: any) {
       console.error("Pool interaction error:", err);
-      setTxError(err.reason || err.message || "Transaction failed");
+      setTxError(formatTransactionError(err));
     } finally {
       setIsSubmitting(false);
     }
@@ -103,7 +104,7 @@ export default function LendPage() {
       await requestFaucetTokens(tokenAddr, userAddress, 1000);
       await loadData(userAddress);
     } catch (err: any) {
-      setTxError(err.message || "Faucet mint failed");
+      setTxError(formatTransactionError(err));
     } finally {
       setFaucetLoading(false);
     }
@@ -127,7 +128,7 @@ export default function LendPage() {
           <button
             onClick={() => handleFaucet("xUSDC")}
             disabled={faucetLoading}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border text-xs text-muted-foreground hover:text-foreground hover:border-foreground/40 transition-colors disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-2 text-xs text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
           >
             <Droplet className="w-3.5 h-3.5" />
             <span>+1,000 xUSDC</span>
@@ -136,7 +137,7 @@ export default function LendPage() {
           <button
             onClick={() => handleFaucet("xCTC")}
             disabled={faucetLoading}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border text-xs text-muted-foreground hover:text-foreground hover:border-foreground/40 transition-colors disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-2 text-xs text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
           >
             <Droplet className="w-3.5 h-3.5" />
             <span>+1,000 xCTC</span>
@@ -160,7 +161,7 @@ export default function LendPage() {
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-surface-2 border border-border flex items-center justify-center text-sm font-medium text-foreground font-mono">
+                <div className="w-9 h-9 rounded-lg bg-surface-2 flex items-center justify-center text-sm font-medium text-foreground font-mono">
                   {res.symbol === "xUSDC" ? "$" : "C"}
                 </div>
                 <div>
@@ -180,7 +181,7 @@ export default function LendPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-3 p-3.5 rounded-2xl bg-background/60 border border-border text-xs font-mono">
+            <div className="grid grid-cols-3 gap-3 p-3.5 rounded-2xl bg-surface-2/50 text-xs font-mono">
               <div>
                 <span className="text-muted-foreground block">Total Supplied</span>
                 <span className="text-white font-bold">{res.totalSupplied.toLocaleString()}</span>
@@ -251,7 +252,7 @@ export default function LendPage() {
                 Wallet: {selectedToken === "xUSDC" ? `${balances.xUSDC.toFixed(2)} xUSDC` : `${balances.xCTC.toFixed(2)} xCTC`}
               </span>
             </div>
-            <div className="flex items-center gap-3 p-3 rounded-2xl bg-background border border-border">
+            <div className="flex items-center gap-3 p-3 rounded-2xl bg-surface-2">
               <input
                 type="number"
                 step="any"
@@ -264,7 +265,7 @@ export default function LendPage() {
               <select
                 value={selectedToken}
                 onChange={(e) => setSelectedToken(e.target.value as "xUSDC" | "xCTC")}
-                className="bg-surface border border-border text-white text-sm font-semibold rounded-xl px-3 py-2 focus:outline-none"
+                className="bg-card text-white text-sm font-semibold rounded-xl px-3 py-2 focus:outline-none"
               >
                 <option value="xUSDC">xUSDC</option>
                 <option value="xCTC">xCTC</option>
@@ -274,16 +275,16 @@ export default function LendPage() {
 
           {/* Feedback Alerts */}
           {txHash && (
-            <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-500/50 flex items-center justify-between text-xs font-mono text-emerald-300">
+            <div className="p-4 rounded-2xl bg-positive/10 flex items-center justify-between text-xs font-mono text-positive">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <CheckCircle2 className="w-4 h-4 text-positive" />
                 <span>Transaction Confirmed On-Chain!</span>
               </div>
               <a
                 href={`${NETWORKS.CREDITCOIN_TESTNET.explorer}/tx/${txHash}`}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-1 hover:underline text-emerald-200"
+                className="flex items-center gap-1 hover:underline text-positive"
               >
                 <span>Explorer</span>
                 <ExternalLink className="w-3 h-3" />
@@ -292,7 +293,7 @@ export default function LendPage() {
           )}
 
           {txError && (
-            <div className="p-4 rounded-2xl bg-red-950/40 border border-red-500/50 flex items-center gap-2 text-xs font-mono text-red-300">
+            <div className="p-4 rounded-2xl bg-negative/10 flex items-center gap-2 text-xs font-mono text-negative">
               <AlertCircle className="w-4 h-4 flex-shrink-0" />
               <span>{txError}</span>
             </div>

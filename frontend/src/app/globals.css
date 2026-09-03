@@ -60,19 +60,47 @@ body {
 }
 
 /* ---------------------------------------------------------------------------
-   Shared card primitives for app pages
+   Shared card primitives for app pages (clean, borderless)
 --------------------------------------------------------------------------- */
 .glass-card {
   background: var(--card);
-  border: 1px solid var(--border);
+  border: none;
   border-radius: 1rem;
 }
 
 .glass-card-hover {
-  transition: border-color 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 .glass-card-hover:hover {
-  border-color: rgba(196, 181, 253, 0.35);
+  background: var(--surface-2);
+}
+
+/* ---------------------------------------------------------------------------
+   Remove outline and focus rings from buttons, inputs, and interactive cards
+--------------------------------------------------------------------------- */
+button,
+[role="button"],
+a,
+input,
+select {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus,
+button:focus-visible,
+[role="button"]:focus,
+[role="button"]:focus-visible,
+a:focus,
+a:focus-visible,
+input:focus,
+input:focus-visible,
+select:focus,
+select:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  --tw-ring-offset-shadow: none !important;
+  --tw-ring-shadow: none !important;
 }
 
 /* ---------------------------------------------------------------------------
