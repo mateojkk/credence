@@ -9,6 +9,7 @@ import {
   fetchUserLoans,
   executeBorrow,
   executeRepay,
+  connectBrowserWallet,
   CreditProfileData,
   UserLoanData,
   requestFaucetTokens,
@@ -102,16 +103,40 @@ export default function BorrowPage() {
         .then((accounts: string[]) => {
           if (accounts && accounts.length > 0) {
             setUserAddress(accounts[0]);
+            setIsDemoMode(false);
             loadUserData(accounts[0]);
           } else {
-            // No wallet: preview a funded demo address's real on-chain data
-            const defaultAddr = "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7";
-            setIsDemoMode(true);
-            setUserAddress(defaultAddr);
-            loadUserData(defaultAddr);
+            setUserAddress("");
+            setIsDemoMode(false);
+            loadUserData("");
           }
         })
-        .catch(() => {});
+        .catch(() => {
+          setUserAddress("");
+          setIsDemoMode(false);
+          loadUserData("");
+        });
+
+      const onAccountsChanged = (accounts: string[]) => {
+        if (accounts && accounts.length > 0) {
+          setUserAddress(accounts[0]);
+          setIsDemoMode(false);
+          loadUserData(accounts[0]);
+        } else {
+          setUserAddress("");
+          setIsDemoMode(false);
+          loadUserData("");
+        }
+      };
+
+      (window as any).ethereum.on("accountsChanged", onAccountsChanged);
+      return () => {
+        (window as any).ethereum?.removeListener("accountsChanged", onAccountsChanged);
+      };
+    } else {
+      setUserAddress("");
+      setIsDemoMode(false);
+      loadUserData("");
     }
   }, []);
 
@@ -119,6 +144,21 @@ export default function BorrowPage() {
     e.preventDefault();
     setTxError(null);
     setTxHash(null);
+
+    if (!userAddress) {
+      if (typeof window === "undefined" || !(window as any).ethereum) {
+        setTxError("No Web3 wallet detected. Please install MetaMask to borrow.");
+        return;
+      }
+      try {
+        const { address } = await connectBrowserWallet();
+        setUserAddress(address);
+        await loadUserData(address);
+      } catch (err: any) {
+        setTxError(formatTransactionError(err));
+      }
+      return;
+    }
 
     const cTokenAddr = collateralToken === "xCTC" ? CONTRACT_ADDRESSES.xCTC : CONTRACT_ADDRESSES.xUSDC;
     const bTokenAddr = borrowToken === "xUSDC" ? CONTRACT_ADDRESSES.xUSDC : CONTRACT_ADDRESSES.xCTC;
@@ -374,9 +414,11 @@ export default function BorrowPage() {
             {/* Submit Button */}
             <button
               type="submit"
-              disabled={isSubmitting || !canBorrow}
+              disabled={isSubmitting || (userAddress ? !canBorrow : false)}
               className={`w-full py-4 rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2 ${
-                canBorrow
+                !userAddress
+                  ? "bg-primary text-primary-foreground hover:opacity-90 active:scale-[0.98]"
+                  : canBorrow
                   ? "bg-primary text-primary-foreground hover:opacity-90 active:scale-[0.98]"
                   : "bg-surface-2 text-faint cursor-not-allowed"
               }`}
@@ -386,6 +428,8 @@ export default function BorrowPage() {
                   <RefreshCw className="w-4 h-4 animate-spin" />
                   <span>Confirming On-Chain...</span>
                 </>
+              ) : !userAddress ? (
+                <span>Connect Wallet to Borrow</span>
               ) : hasInsufficientCollateral ? (
                 <span>Insufficient {collateralToken} Balance (Use Faucet Above)</span>
               ) : !isLtvValid ? (

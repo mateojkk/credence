@@ -7,6 +7,7 @@ import {
   fetchUserBalances,
   executeSupply,
   executeWithdraw,
+  connectBrowserWallet,
   requestFaucetTokens,
   formatTransactionError,
   PoolReserveData,
@@ -76,6 +77,21 @@ export default function LendPage() {
     e.preventDefault();
     setTxError(null);
     setTxHash(null);
+
+    if (!userAddress) {
+      if (typeof window === "undefined" || !(window as any).ethereum) {
+        setTxError("No Web3 wallet detected. Please install MetaMask to deposit or withdraw.");
+        return;
+      }
+      try {
+        const { address } = await connectBrowserWallet();
+        setUserAddress(address);
+        await loadData(address);
+      } catch (err: any) {
+        setTxError(formatTransactionError(err));
+      }
+      return;
+    }
 
     const tokenAddr = selectedToken === "xUSDC" ? CONTRACT_ADDRESSES.xUSDC : CONTRACT_ADDRESSES.xCTC;
     const parsedAmount = parseFloat(amount) || 0;
@@ -312,6 +328,8 @@ export default function LendPage() {
                 <RefreshCw className="w-4 h-4 animate-spin" />
                 <span>Confirming On-Chain...</span>
               </>
+            ) : !userAddress ? (
+              <span>Connect Wallet to {mode === "supply" ? "Deposit" : "Withdraw"}</span>
             ) : mode === "supply" ? (
               <>
                 <ArrowDownToLine className="w-4 h-4" />

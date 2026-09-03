@@ -144,6 +144,20 @@ function getTierName(tierNum: number): "UNVERIFIED" | "BRONZE" | "SILVER" | "GOL
 
 // Fetch live Credit Profile for any address directly from CredenceHub
 export async function fetchLiveCreditProfile(userAddress: string): Promise<CreditProfileData> {
+  if (!userAddress || !ethers.isAddress(userAddress)) {
+    return {
+      score: 500,
+      tier: 0,
+      tierName: "UNVERIFIED",
+      totalRepaidUSD: 0,
+      successfulRepayments: 0,
+      lastAttestationTime: 0,
+      defaultCount: 0,
+      isBlacklisted: false,
+      maxLtv: 50,
+      discountBps: 0,
+    };
+  }
   const provider = getReadProvider();
   const hub = new ethers.Contract(CONTRACT_ADDRESSES.xCredenceHub, HUB_ABI, provider);
 
@@ -282,6 +296,9 @@ export async function fetchPoolReserves(): Promise<PoolReserveData[]> {
 
 // Fetch user token balances (native xCTC, xUSDC, xCTC ERC20)
 export async function fetchUserBalances(userAddress: string) {
+  if (!userAddress || !ethers.isAddress(userAddress)) {
+    return { nativeCTC: 0, xUSDC: 0, xCTC: 0 };
+  }
   const provider = getReadProvider();
   const usdc = new ethers.Contract(CONTRACT_ADDRESSES.xUSDC, ERC20_ABI, provider);
   const ctcErc20 = new ethers.Contract(CONTRACT_ADDRESSES.xCTC, ERC20_ABI, provider);
@@ -306,6 +323,9 @@ export async function fetchUserBalances(userAddress: string) {
 
 // Fetch user's supplied balances in the lending pool
 export async function fetchUserSupplies(userAddress: string): Promise<{ xUSDC: number; xCTC: number }> {
+  if (!userAddress || !ethers.isAddress(userAddress)) {
+    return { xUSDC: 0, xCTC: 0 };
+  }
   const provider = getReadProvider();
   const pool = new ethers.Contract(CONTRACT_ADDRESSES.xCredenceLendingPool, POOL_ABI, provider);
 
@@ -326,6 +346,9 @@ export async function fetchUserSupplies(userAddress: string): Promise<{ xUSDC: n
 
 // Fetch active loans for an address
 export async function fetchUserLoans(userAddress: string): Promise<UserLoanData[]> {
+  if (!userAddress || !ethers.isAddress(userAddress)) {
+    return [];
+  }
   const provider = getReadProvider();
   const pool = new ethers.Contract(CONTRACT_ADDRESSES.xCredenceLendingPool, POOL_ABI, provider);
 
