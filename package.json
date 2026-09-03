@@ -14,6 +14,5 @@
     "install:all": "npm install --prefix contracts && npm install --prefix relayer && npm install --prefix frontend"
   },
   "keywords": ["creditcoin", "attestcoin", "usc", "cross-chain", "credit", "defi"],
-  "author": "Credence Labs",
-  "license": "MIT"
+  "private": true
 }

@@ -158,6 +158,15 @@ npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) to access the interactive dApp (credit scanner, borrow/supply terminals, proof explorer, judge playground, sentinel stream). The app reads live on-chain state even without a wallet connected.
 
+### 4. Deploying to Vercel (Serverless Production)
+Credence is optimized for zero-config Vercel Serverless deployment:
+1. Import the repository on [Vercel](https://vercel.com/new).
+2. Set **Root Directory** to `frontend`.
+3. Framework Preset: **Next.js** (auto-detected).
+4. Build Command: `next build` (default).
+5. Output Directory: `.next` (default).
+6. Environment Variables: **None required** (the dApp connects to Creditcoin CC3 Testnet via public RPC over HTTPS).
+
 ### Repository Structure
 ```
 xcredence/
@@ -168,7 +177,7 @@ xcredence/
 │   ├── src/mocks/        #   local-only precompile emulators for tests
 │   ├── scripts/          #   deploy.ts, seed-demo-profiles.ts, verify-proof-demo.ts
 │   └── test/             #   11 passing tests (canonical proof flow, LTV, liquidation)
-├── relayer/              # TypeScript — canonical proof pipeline, AI risk engine, e2e runner
+├── relayer/              # TypeScript — canonical proof pipeline, risk sentinel, e2e runner
 ├── frontend/             # Next.js 14 dApp — credit scanner, borrow/lend, proof explorer, sentinel
 ├── scripts/              # root deploy/wallet utilities + precompile restore safety script
 └── docs/                 # whitepaper, architecture, pitch deck, demo script
@@ -187,7 +196,7 @@ xcredence/
 
 ## 👥 Team & Submission Contacts
 - **Project Name:** Credence
-- **Sector:** DeFi / AI / RWA
+- **Sector:** DeFi (Cross-Chain Verifiable Lending & Sovereign Credit)
 - **Hackathon:** BUIDL CTC 2026 Fall
 - **Ecosystem:** Creditcoin & Credit Labs
 - **Official Docs:** [docs.creditcoin.org/creditcoin-usc](https://docs.creditcoin.org/creditcoin-usc)
