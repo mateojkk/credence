@@ -60,12 +60,15 @@ export default function LendPage() {
             setUserAddress(accounts[0]);
             loadData(accounts[0]);
           } else {
-            const demo = "0xd81e22761aa08f85D6b2aA931384e60211dA7287";
-            setUserAddress(demo);
-            loadData(demo);
+            setUserAddress("");
+            loadData("");
           }
         })
-        .catch(() => {});
+        .catch(() => {
+          loadData("");
+        });
+    } else {
+      loadData("");
     }
   }, []);
 

@@ -49,7 +49,7 @@ export const Footer = () => {
               <li><Link href="/overview" className="text-muted-foreground hover:text-foreground transition-colors">Dashboard</Link></li>
               <li><Link href="/borrow" className="text-muted-foreground hover:text-foreground transition-colors">Borrow</Link></li>
               <li><Link href="/lend" className="text-muted-foreground hover:text-foreground transition-colors">Supply liquidity</Link></li>
-              <li><Link href="/sentinel" className="text-muted-foreground hover:text-foreground transition-colors">AI Sentinel</Link></li>
+              <li><Link href="/sentinel" className="text-muted-foreground hover:text-foreground transition-colors">Risk Sentinel</Link></li>
               <li><Link href="/faucet" className="text-muted-foreground hover:text-foreground transition-colors">Testnet Faucet</Link></li>
             </ul>
           </div>
@@ -57,7 +57,7 @@ export const Footer = () => {
           {/* On-chain + resources */}
           <div>
             <h4 className="text-[10px] uppercase tracking-[0.14em] text-faint mb-4">On-chain</h4>
-            <ul className="space-y-2.5 text-sm font-mono text-xs">
+            <ul className="space-y-2.5 text-sm">
               <li>
                 <a href={`${explorer}/address/${CONTRACT_ADDRESSES.xCredenceHub}`} target="_blank" rel="noreferrer" className="flex items-center justify-between text-muted-foreground hover:text-foreground transition-colors">
                   <span>xCredenceHub</span>
@@ -72,27 +72,30 @@ export const Footer = () => {
               </li>
               <li>
                 <a href={`${explorer}/address/${CONTRACT_ADDRESSES.AIRiskSentinel}`} target="_blank" rel="noreferrer" className="flex items-center justify-between text-muted-foreground hover:text-foreground transition-colors">
-                  <span>AIRiskSentinel</span>
+                  <span>RiskSentinel</span>
                   <ExternalLink className="w-3 h-3 text-faint" />
                 </a>
               </li>
               <li className="flex items-center justify-between text-accent">
                 <span>Block Prover 0x0FD2</span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded-full border border-accent/40 bg-accent/10 normal-case">native</span>
+                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-accent/10 normal-case">native</span>
               </li>
               <li>
-                <a href="https://faucet.cc3-testnet.creditcoin.network" target="_blank" rel="noreferrer" className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors font-sans text-sm">
-                  CC3 Testnet Faucet <ExternalLink className="w-3 h-3 text-faint" />
+                <a href="https://faucet.cc3-testnet.creditcoin.network" target="_blank" rel="noreferrer" className="flex items-center justify-between text-muted-foreground hover:text-foreground transition-colors">
+                  <span>CC3 Testnet Faucet</span>
+                  <ExternalLink className="w-3 h-3 text-faint" />
                 </a>
               </li>
               <li>
-                <a href="https://attestcoin.org/" target="_blank" rel="noreferrer" className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors font-sans text-sm">
-                  Attestcoin Protocol <ExternalLink className="w-3 h-3 text-faint" />
+                <a href="https://attestcoin.org/" target="_blank" rel="noreferrer" className="flex items-center justify-between text-muted-foreground hover:text-foreground transition-colors">
+                  <span>Attestcoin Protocol</span>
+                  <ExternalLink className="w-3 h-3 text-faint" />
                 </a>
               </li>
               <li>
-                <a href="https://docs.creditcoin.org/creditcoin-usc" target="_blank" rel="noreferrer" className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors font-sans text-sm">
-                  Developer docs <ExternalLink className="w-3 h-3 text-faint" />
+                <a href="https://docs.creditcoin.org/creditcoin-usc" target="_blank" rel="noreferrer" className="flex items-center justify-between text-muted-foreground hover:text-foreground transition-colors">
+                  <span>Developer docs</span>
+                  <ExternalLink className="w-3 h-3 text-faint" />
                 </a>
               </li>
             </ul>
@@ -100,11 +103,11 @@ export const Footer = () => {
         </div>
 
         <div className="mt-12 border-t border-hairline pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-faint">
-          <p>© 2026 Credence Labs · BUIDL CTC 2026 Fall submission</p>
+          <p>© 2026 Credence · BUIDL CTC 2026 Fall submission</p>
           <div className="flex items-center gap-3">
             <a
               href="mailto:labs@credence.dev"
-              className="w-8 h-8 rounded-lg border border-border hover:border-foreground/50 flex items-center justify-center transition-colors"
+              className="w-8 h-8 rounded-lg bg-surface-2 hover:bg-surface-2/80 flex items-center justify-center transition-colors text-muted-foreground hover:text-foreground"
               aria-label="Email"
             >
               <Mail className="w-3.5 h-3.5" />
@@ -113,14 +116,14 @@ export const Footer = () => {
               href="https://x.com/creditcoin"
               target="_blank"
               rel="noreferrer"
-              className="w-8 h-8 rounded-lg border border-border hover:border-foreground/50 flex items-center justify-center transition-colors"
+              className="w-8 h-8 rounded-lg bg-surface-2 hover:bg-surface-2/80 flex items-center justify-center transition-colors text-muted-foreground hover:text-foreground"
               aria-label="X (Twitter)"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5" aria-hidden>
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
               </svg>
             </a>
-            <span className="font-mono hidden md:inline">Creditcoin CC3 Testnet</span>
+            <span className="hidden md:inline">Creditcoin CC3 Testnet</span>
           </div>
         </div>
       </div>

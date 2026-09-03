@@ -68,6 +68,7 @@ export const Navbar = () => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isCorrectNetwork, setIsCorrectNetwork] = useState(true);
+  const [showNoWalletModal, setShowNoWalletModal] = useState(false);
 
   const updateBalances = async (addr: string) => {
     try {
@@ -93,8 +94,9 @@ export const Navbar = () => {
     const eth = (window as any).ethereum;
     if (typeof window === "undefined" || !eth) return;
 
-    // Restore session
-    eth.request({ method: "eth_accounts" })
+    // Check if an account is already authorized
+    eth
+      .request({ method: "eth_accounts" })
       .then((accounts: string[]) => {
         if (accounts && accounts.length > 0) {
           setUserAddress(accounts[0]);
@@ -137,6 +139,10 @@ export const Navbar = () => {
   const handleConnectWallet = async () => {
     setIsConnecting(true);
     try {
+      if (typeof window === "undefined" || !(window as any).ethereum) {
+        setShowNoWalletModal(true);
+        return;
+      }
       const { address } = await connectBrowserWallet();
       setUserAddress(address);
       setWalletConnected(true);
@@ -150,10 +156,7 @@ export const Navbar = () => {
         if (!correct) await switchToCredencoinTestnet();
       }
     } catch (err: any) {
-      console.warn("Wallet connect warning:", err.message);
-      setUserAddress("0xd81e22761aa08f85D6b2aA931384e60211dA7287");
-      setWalletConnected(true);
-      updateBalances("0xd81e22761aa08f85D6b2aA931384e60211dA7287");
+      console.warn("Wallet connect warning:", err?.message || err);
     } finally {
       setIsConnecting(false);
     }
@@ -270,6 +273,40 @@ export const Navbar = () => {
               </Link>
             );
           })}
+        </div>
+      )}
+
+      {/* Web3 Wallet Required Modal */}
+      {showNoWalletModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-150">
+          <div className="glass-card max-w-sm w-full p-6 space-y-4 text-center">
+            <div className="w-12 h-12 rounded-full bg-accent/15 text-accent flex items-center justify-center mx-auto">
+              <Wallet className="w-6 h-6" />
+            </div>
+            <div className="space-y-1.5">
+              <h3 className="text-base font-medium text-foreground">Web3 Wallet Required</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                No Web3 wallet extension was detected in this browser. To borrow, supply, or mint tokens on Creditcoin CC3 Testnet, please install MetaMask.
+              </p>
+            </div>
+            <div className="space-y-2 pt-2">
+              <a
+                href="https://metamask.io/download/"
+                target="_blank"
+                rel="noreferrer"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-accent-foreground hover:opacity-90 transition-opacity"
+              >
+                Get MetaMask
+              </a>
+              <button
+                type="button"
+                onClick={() => setShowNoWalletModal(false)}
+                className="w-full inline-flex items-center justify-center rounded-lg bg-surface-2 px-4 py-2 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </header>
