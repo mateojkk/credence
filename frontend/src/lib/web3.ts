@@ -500,7 +500,7 @@ export async function executeBorrow(
   if (allowance < parsedCollateral) {
     const approveTx = await collateralContract.approve(
       CONTRACT_ADDRESSES.xCredenceLendingPool,
-      ethers.MaxUint256
+      parsedCollateral
     );
     await approveTx.wait();
   }
@@ -550,7 +550,7 @@ export async function executeRepay(loanId: number, amount: number, borrowTokenAd
   if (allowance < parsedAmount) {
     const approveTx = await tokenContract.approve(
       CONTRACT_ADDRESSES.xCredenceLendingPool,
-      ethers.MaxUint256
+      parsedAmount
     );
     await approveTx.wait();
   }
@@ -591,7 +591,7 @@ export async function executeSupply(tokenAddress: string, amount: number) {
   if (allowance < parsedAmount) {
     const approveTx = await token.approve(
       CONTRACT_ADDRESSES.xCredenceLendingPool,
-      ethers.MaxUint256
+      parsedAmount
     );
     await approveTx.wait();
   }
