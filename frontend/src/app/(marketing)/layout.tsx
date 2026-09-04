@@ -93,8 +93,7 @@ export default function MarketingLayout({
             </div>
           </div>
           <div className="mt-8 border-t border-hairline pt-5 flex flex-col sm:flex-row justify-between gap-2 text-xs text-faint">
-            <p>© 2026 Credence Labs · BUIDL CTC 2026 Fall submission</p>
-            <p className="font-mono">Creditcoin CC3 Testnet · Precompile 0x0FD2</p>
+            <p>© 2026 Credence · BUIDL CTC 2026 Fall submission</p>
           </div>
         </div>
       </footer>
