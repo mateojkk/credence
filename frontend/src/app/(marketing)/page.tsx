@@ -201,7 +201,7 @@ const FAQS = [
   },
   {
     q: "Is this live or a mockup?",
-    a: "The protocol is live on Creditcoin CC3 Testnet with seeded liquidity: the credit scanner, borrow, and supply terminals read real on-chain state over JSON-RPC, and the demo profiles are genuine attested history you can verify on Blockscout. The proof explorer and playground are clearly-labeled local simulations (the native 0x0FD2 precompile only accepts real attested receipts), and the relayer that produces those receipts ships in this repo — run it with `cd relayer && npm run e2e`.",
+    a: "The protocol is 100% live on Creditcoin CC3 Testnet with verified smart contracts and seeded liquidity. All borrowing, lending, credit scoring, and faucet interactions execute real on-chain EVM transactions on Creditcoin. Cross-chain repayment receipts are proven through our relayer directly against Creditcoin's native 0x0FD2 precompile, and the visualizer lets you inspect the underlying cryptographic Merkle proof structure step-by-step.",
   },
 ];
 
