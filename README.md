@@ -32,9 +32,9 @@ flowchart TD
         Vault -->|2. Emits Deterministic Receipt| Receipt["Tx Receipt & Merkle Leaf"]
     end
 
-    subgraph Relayer ["Off-Chain Attestcoin Worker & AI Sentinel"]
+    subgraph Relayer ["Off-Chain Attestcoin Worker & Risk Sentinel"]
         Receipt -->|3. Fetches Header & Proof| SDK["@gluwa/cc-next-query-builder + Proof Builder API"]
-        AI["Autonomous AI Risk Sentinel"] -->|Monitors Health Factors| SDK
+        Sentinel["Autonomous Risk Sentinel"] -->|Monitors Health Factors| SDK
     end
 
     subgraph Creditcoin ["Creditcoin Settlement Layer (Chain ID: 102031)"]
@@ -56,7 +56,7 @@ flowchart TD
 | **Testnet Deployment** | Deployed and configured for **Creditcoin Testnet (`102031`)** and **Ethereum Sepolia (`11155111`)**. |
 | **Creditcoin Mission Alignment** | Realizes Creditcoin's foundational thesis: building global verifiable credit history and capital-efficient debt settlement. |
 | **CEIP Investability** | Robust tokenomics, multi-asset revenue model, and institutional RWA credit line facilities. |
-| **AI Autonomous Action** | Autonomous AI Sentinel agent that monitors cross-chain health factors and triggers proof-backed liquidations. |
+| **Autonomous Risk Management** | Autonomous Sentinel agent that monitors cross-chain health factors and triggers proof-backed liquidations. |
 
 ---
 
@@ -138,7 +138,7 @@ To (re)seed the on-chain demo credit profiles used by the `/check` presets (owne
 npm run seed:profiles
 ```
 
-### 2. Off-Chain Relayer & AI Sentinel
+### 2. Off-Chain Relayer & Risk Sentinel
 ```bash
 cd ../relayer
 npm install
@@ -146,7 +146,7 @@ cp .env.example .env   # fill in RELAYER_PRIVATE_KEY (testnet-funded wallet)
 ```
 ```bash
 npm run worker      # proof worker: fetch source receipts, build & submit attestations
-npm run sentinel    # AI Risk Sentinel daemon: health-factor telemetry + autonomous liquidation
+npm run sentinel    # Risk Sentinel daemon: health-factor telemetry + autonomous liquidation
 npm run e2e         # one-shot end-to-end: repay on Sepolia -> attestation on Creditcoin -> score update
 ```
 

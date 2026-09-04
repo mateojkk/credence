@@ -9,12 +9,12 @@ graph TB
         SV --> TX
     end
 
-    subgraph OffChainLayer ["Off-Chain Relayer & AI Sentinel Suite"]
+    subgraph OffChainLayer ["Off-Chain Relayer & Risk Sentinel Suite"]
         Worker["Attestcoin Proof Worker (@gluwa/cc-next-query-builder)"]
-        AI["Autonomous AI Risk Sentinel Agent"]
+        SentinelAgent["Autonomous Risk Sentinel Agent"]
         TX --> Worker
         Worker --> Proof["Serialized Merkle & Continuity Proof"]
-        AI --> Telemetry["Risk Telemetry & Anomaly Alerts"]
+        SentinelAgent --> Telemetry["Risk Telemetry & Anomaly Alerts"]
     end
 
     subgraph CreditcoinLayer ["Creditcoin Settlement Layer (Chain ID: 102031)"]

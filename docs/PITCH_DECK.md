@@ -1,6 +1,6 @@
 # Credence Pitch Deck · BUIDL CTC 2026 Fall
 
-> **Universal Cross-Chain Verifiable Credit Protocol & Autonomous AI Risk Sentinel**  
+> **Universal Cross-Chain Verifiable Credit Protocol & Autonomous Risk Management**  
 > *Targeting the Creditcoin Ecosystem Investment Program (CEIP) Fast-Track & Grand Prize*
 
 ---
@@ -26,7 +26,7 @@ Credence turns Creditcoin into the **Universal Settlement and Credit Scoring Eng
 - **Trustless Readability:** Verifies transaction receipts & Merkle proofs from any EVM chain using Creditcoin's native **`0x0FD2`** Block Prover precompile in ~15 seconds.
 - **Sovereign Attested Credit Score (xCS):** Computes a dynamic, unforgeable credit rating (300 to 850) based on verified cross-chain volume and tenure.
 - **Capital Efficiency (90% LTV):** Prime borrowers unlock undercollateralized lending and preferential interest rates.
-- **Autonomous AI Risk Sentinel:** Continuously evaluates multi-chain volatility and executes automated liquidations to protect liquidity pools.
+- **Autonomous Risk Sentinel:** Continuously evaluates multi-chain volatility and executes automated liquidations to protect liquidity pools.
 
 ---
 
@@ -54,7 +54,7 @@ Source Chain (Sepolia / Ethereum / Base)
 1. **Undercollateralized Borrowing Terminal:** Dynamic LTV slider tied strictly to verified credit scores (50% $\rightarrow$ 65% $\rightarrow$ 75% $\rightarrow$ 85% $\rightarrow$ 90%).
 2. **Multi-Asset Liquidity Vaults:** High-yield liquidity pools (USDC, CTC, USDT) earning blended protocol APR.
 3. **Live Merkle Proof Visualizer:** Real-time explorer demonstrating step-by-step cryptographic precompile execution.
-4. **Autonomous AI Risk Sentinel Stream:** Real-time telemetry feed monitoring health factors across chains and preventing bad debt.
+4. **Autonomous Risk Sentinel Stream:** Real-time telemetry feed monitoring health factors across chains and preventing bad debt.
 
 ---
 
@@ -86,7 +86,7 @@ Source Chain (Sepolia / Ethereum / Base)
 ## Slide 9: Roadmap & CEIP Milestones
 - **Phase 1 (Q3 2026 - Hackathon):** Testnet deployment on Creditcoin (102031) and Sepolia (11155111), `@gluwa/cc-next-query-builder` relayer, interactive visualizer.
 - **Phase 2 (Q4 2026 - CEIP Incubation):** Security audit with CertiK, Mainnet dual-chain deployment, integration with top 3 RWA invoice providers.
-- **Phase 3 (Q1 2027):** Launch of Institutional Credit Line Facilities & Multi-Agent AI Sentinel Swarms.
+- **Phase 3 (Q1 2027):** Launch of Institutional Credit Line Facilities & Multi-Chain Sentinel Keeper Swarms.
 
 ---
 

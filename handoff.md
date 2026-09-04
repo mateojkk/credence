@@ -1,7 +1,7 @@
 # 🚀 Credence Protocol — Project Handoff & Architecture Manifest
 
 **BUIDL CTC 2026 Fall Hackathon Submission**  
-*Tracks: DeFi (Track 1) · AI & Autonomous Agents (Track 5) · Real-World Assets (RWA)*  
+*Track: DeFi & Cross-Chain Lending (Track 1) — Grand Prize Candidate*  
 **Deadline:** September 6, 2026, 23:59 ET  
 **Protocol Status:** ✅ **Production Ready · Zero-Mock · Live on Creditcoin CC3 Testnet**
 
@@ -9,7 +9,7 @@
 
 ## 1. Executive Summary
 
-**Credence** is the first **Universal Cross-Chain Verifiable Credit Protocol and Autonomous AI Risk Sentinel** built natively on **Creditcoin (CC3)**. 
+**Credence** is the first **Universal Cross-Chain Verifiable Credit Protocol and Autonomous Risk Sentinel** built natively on **Creditcoin (CC3)**. 
 
 ### The Problem
 Legacy DeFi lending protocols (Aave, Compound, Maker) force borrowers into **150%–200% overcollateralization** because smart contracts cannot verify repayment history across disparate blockchains. As a result, trillions of dollars in on-chain capital remain idle, and borrowers with flawless credit on Ethereum, Sepolia, or Base are treated as high-risk anonymous actors.
@@ -18,7 +18,7 @@ Legacy DeFi lending protocols (Aave, Compound, Maker) force borrowers into **150
 Credence transforms Creditcoin into the **global credit settlement layer**:
 1. **Verifiable Credit Scoring (xCS)**: Uses Creditcoin's native **`0x0FD2` Block Prover Precompile** (Attestcoin Protocol / Universal Smart Contracts) to cryptographically verify Merkle Patricia Trie (MPT) inclusion proofs from external source chains (Ethereum, Sepolia, Base, Arbitrum) without centralized oracles.
 2. **Undercollateralized Lending**: Borrowers escalate their on-chain credit score from 300 to 850, unlocking up to **90% Loan-to-Value (LTV)** (only 111% collateral requirement) and up to **3.00% APR interest discounts**.
-3. **Autonomous AI Risk Sentinel**: Decentralized AI nodes continuously stream Bayesian volatility metrics, monitor borrower health factors in real-time, and trigger autonomous on-chain liquidations when risk thresholds are breached.
+3. **Autonomous Risk Sentinel**: Decentralized keeper nodes continuously monitor borrower health factors in real-time against oracle reserves, and trigger autonomous on-chain liquidations when risk thresholds are breached.
 
 ---
 
@@ -99,7 +99,7 @@ frontend/src/app/
 ├── (app)/lend/page.tsx     # 💧 Liquidity Supply & Faucet (Supply/Withdraw, APR)
 ├── (app)/visualizer/page.tsx # 🔬 Attestcoin Proof Explorer (MPT tree, concept sim)
 ├── (app)/playground/page.tsx # 🧪 Judge/Dev playground (simulated proof scenarios)
-├── (app)/sentinel/page.tsx  # 🤖 AI Risk Sentinel Stream (live telemetry, shocks)
+├── (app)/sentinel/page.tsx  # 🛡️ Risk Sentinel Stream (live telemetry, shocks)
 ├── (app)/layout.tsx         # 📱 Global App Shell (Navbar, Footer)
 └── globals.css              # 🎨 Custom design system & glassmorphism tokens
 ```
@@ -154,7 +154,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
    - Click **"Simulate Proof Verification"** and watch the step-by-step MPT receipt walkthrough (concept simulation — the native `0x0FD2` precompile only accepts real attested blocks; live receipts flow through the relayer via `npm run e2e`).
    - Cross-check the **real attested outcomes** on `/check` and verify the seeded `CreditScoreUpdated` events on Blockscout.
 
-5. **Observe AI Risk Sentinel (`/sentinel`)**:
+5. **Observe Risk Sentinel (`/sentinel`)**:
    - View live health-factor telemetry across chains and run the shock simulation to watch the Sentinel flag positions and (if authorized) dispatch autonomous liquidations.
 
 ---

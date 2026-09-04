@@ -197,7 +197,7 @@ const FAQS = [
   },
   {
     q: "What happens if a borrower's position degrades?",
-    a: "The autonomous AI Risk Sentinel reprices every active loan against live oracle reserves using a volatility-adjusted health factor. Positions entering critical bands trigger on-chain telemetry through AIRiskSentinel, and authorized agents can execute fully collateralized liquidations without waiting for a human.",
+    a: "The autonomous Risk Sentinel reprices every active loan against live oracle reserves using a volatility-adjusted health factor. Positions entering critical bands trigger on-chain telemetry through the RiskSentinel contract, and authorized agents can execute fully collateralized liquidations without waiting for a human.",
   },
   {
     q: "Is this live or a mockup?",

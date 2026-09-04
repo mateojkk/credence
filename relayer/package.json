@@ -1,7 +1,7 @@
 {
   "name": "credence-relayer",
   "version": "1.0.0",
-  "description": "Credence Off-Chain Attestcoin Proof Relayer & Autonomous AI Risk Sentinel",
+  "description": "Credence Off-Chain Attestcoin Proof Relayer & Autonomous Risk Sentinel",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",

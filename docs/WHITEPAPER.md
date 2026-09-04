@@ -1,5 +1,5 @@
 # Credence Protocol Whitepaper
-### Universal Cross-Chain Verifiable Credit Protocol & Autonomous AI Risk Sentinel
+### Universal Cross-Chain Verifiable Credit Protocol & Autonomous Risk Sentinel
 
 **Authors:** The Credence Research & Engineering Team  
 **Version:** 1.0.0 (Release Candidate)  
@@ -13,7 +13,7 @@ Decentralized lending is currently constrained by the requirement for full or ex
 
 **Credence** introduces a novel decentralized credit settlement protocol deployed natively on **Creditcoin**, powered by the **Attestcoin Protocol (Universal Smart Contracts / USC)**. By utilizing Creditcoin's native **Block Prover precompile (`0x0FD2`)**, Credence verifies Merkle Patricia Trie transaction inclusion and continuity proofs from external blockchains (Ethereum, Sepolia, Base, Arbitrum) in a single block (~15 seconds) with zero reliance on centralized oracles or trusted multi-sig custodians. 
 
-Credence computes a sovereign **Attested Credit Score (xCS)** from 300 to 850, unlocking up to **90% Loan-to-Value (LTV)** undercollateralized debt facilities. Protocol solvency is guaranteed by an autonomous **AI Risk Sentinel**, which monitors cross-chain position health and executes deterministic, proof-backed liquidations.
+Credence computes a sovereign **Attested Credit Score (xCS)** from 300 to 850, unlocking up to **90% Loan-to-Value (LTV)** undercollateralized debt facilities. Protocol solvency is guaranteed by an autonomous **Risk Sentinel**, which monitors cross-chain position health and executes deterministic, proof-backed liquidations.
 
 ---
 
@@ -65,7 +65,7 @@ $$\text{require}(\text{processedAttestations}[\mathcal{H}_{\text{attest}}] == \t
 
 ---
 
-## 4. Autonomous AI Risk Sentinel & Liquidation Dynamics
+## 4. Autonomous Risk Sentinel & Liquidation Dynamics
 
 ### 4.1 Health Factor ($HF$) Formulation
 The health factor of active loan position $i$ is calculated continuously:
@@ -77,7 +77,7 @@ Where:
 - $P_C$: Collateral oracle price.
 - $D_i$: Debt amount outstanding (Principal + accrued interest).
 - $P_D$: Borrowed asset price.
-- $\sigma_{\text{asset}}$: AI volatility index discount factor.
+- $\sigma_{\text{asset}}$: Volatility index discount factor.
 
 ### 4.2 Autonomous Liquidation Trigger
 If $HF_i < 1.05$ (10,500 bps), authorized Sentinel nodes generate an attestation reference and trigger `executeAutonomousLiquidation()`, transferring collateral to the liquidator and assessing a score penalty $\Delta_{\text{default}}$ to the borrower.
