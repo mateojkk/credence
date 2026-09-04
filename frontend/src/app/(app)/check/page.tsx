@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { CreditScoreGauge } from "@/components/CreditScoreGauge";
-import { DEMO_PROFILES } from "@/lib/constants";
 import { fetchLiveCreditProfile, CreditProfileData } from "@/lib/web3";
 import { Search, RefreshCw, ArrowRight } from "lucide-react";
 
@@ -103,8 +102,8 @@ export default function DashboardPage() {
             type="text"
             value={lookupAddress}
             onChange={(e) => setLookupAddress(e.target.value)}
-            placeholder="0x… borrower address"
-            className="w-full bg-card border border-border rounded-xl pl-10 pr-4 py-3 text-sm font-mono text-white placeholder-faint focus:outline-none focus:border-accent transition-colors"
+            placeholder="0x… enter any address to scan on Creditcoin"
+            className="w-full bg-surface-2 border border-hairline rounded-xl pl-10 pr-4 py-3 text-sm font-mono text-foreground placeholder-faint focus:outline-none focus:ring-1 focus:ring-accent transition-colors"
           />
         </div>
         <button
@@ -117,22 +116,22 @@ export default function DashboardPage() {
         </button>
       </form>
 
-      {/* Demo presets */}
-      <div className="flex flex-wrap items-center gap-2 text-xs">
-        <span className="text-faint">Examples:</span>
-        {DEMO_PROFILES.map((profile, i) => (
+      {/* Connected wallet shortcut */}
+      {connectedAddress && (
+        <div className="flex items-center gap-2 text-xs">
+          <span className="text-faint">Connected wallet:</span>
           <button
-            key={profile.address}
+            type="button"
             onClick={() => {
-              setLookupAddress(profile.address);
-              loadProfile(profile.address);
+              setLookupAddress(connectedAddress);
+              loadProfile(connectedAddress);
             }}
-            className="px-2.5 py-1 rounded-full border border-border bg-surface/40 text-muted-foreground hover:text-foreground hover:border-muted-foreground/40 transition-colors"
+            className="px-2.5 py-1 rounded-full border border-hairline bg-surface-2 text-muted-foreground hover:text-foreground transition-colors font-mono"
           >
-            {profile.name.split(" ")[0]} · {profile.tier.toLowerCase()}
+            {connectedAddress.slice(0, 8)}...{connectedAddress.slice(-6)}
           </button>
-        ))}
-      </div>
+        </div>
+      )}
 
       {/* Result: one card, clear hierarchy */}
       <section className="glass-card p-6 sm:p-8">

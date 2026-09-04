@@ -336,7 +336,7 @@ export default function LandingPage() {
                     <p><span className="text-accent">proof</span> MPT path built against receiptsRoot #5,400,120</p>
                     <p><span className="text-accent">verify</span> precompile 0x0FD2 → <span className="text-positive">valid ✓</span> (atomic, 1 block)</p>
                     <p><span className="text-accent">score</span> xCS 500 → 850 · tier PLATINUM · LTV 9000 bps</p>
-                    <p><span className="text-faint">Try it live</span> → <a className="text-accent hover:underline" href="/check?address=0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7">scan seeded profile</a></p>
+                    <p><span className="text-faint">Try it live</span> → <a className="text-accent hover:underline" href="/check">open credit scanner</a></p>
                   </div>
                 </div>
                 <div className="flex justify-end">
