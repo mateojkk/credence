@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { ToastProvider } from "@/components/Toast";
 
 export default function AppLayout({
   children,
@@ -7,7 +8,7 @@ export default function AppLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <ToastProvider>
       {/* Shared ambient layer: soft glow + grain behind every app page */}
       <div aria-hidden className="grain pointer-events-none fixed inset-x-0 top-0 -z-10 h-[70vh] overflow-hidden">
         <div
@@ -27,6 +28,6 @@ export default function AppLayout({
         {children}
       </main>
       <Footer />
-    </>
+    </ToastProvider>
   );
 }

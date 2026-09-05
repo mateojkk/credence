@@ -28,8 +28,10 @@ import {
   DollarSign,
   TrendingDown,
 } from "lucide-react";
+import { useToast } from "@/components/Toast";
 
 export default function BorrowPage() {
+  const toast = useToast();
   const [userAddress, setUserAddress] = useState<string>("");
   const [profile, setProfile] = useState<CreditProfileData>({
     score: 850,
@@ -173,10 +175,17 @@ export default function BorrowPage() {
         durationDays
       );
       setTxHash(receipt.hash);
+      toast.success(
+        "Borrow Confirmed!",
+        `Successfully borrowed ${borrowAmount} ${borrowToken} against ${collateralAmount} ${collateralToken} collateral.`,
+        receipt.hash
+      );
       await loadUserData(userAddress);
     } catch (err: any) {
       console.error("Borrow execution error:", err);
-      setTxError(formatTransactionError(err));
+      const errMsg = formatTransactionError(err);
+      setTxError(errMsg);
+      toast.error("Borrow Failed", errMsg);
     } finally {
       setIsSubmitting(false);
     }
@@ -188,23 +197,36 @@ export default function BorrowPage() {
     try {
       const receipt = await executeRepay(loan.loanId, loan.totalOwed, loan.borrowToken);
       setTxHash(receipt.hash);
+      toast.success(
+        "Loan Repaid!",
+        `Settled #${loan.loanId} (${loan.totalOwed.toLocaleString()} ${loan.borrowSymbol}) and released collateral back to your wallet.`,
+        receipt.hash
+      );
       await loadUserData(userAddress);
     } catch (err: any) {
       console.error("Repay execution error:", err);
-      setTxError(formatTransactionError(err));
+      const errMsg = formatTransactionError(err);
+      setTxError(errMsg);
+      toast.error("Repay Failed", errMsg);
     } finally {
       setRepayingLoanId(null);
     }
   };
 
   const handleGetFaucetCollateral = async () => {
-    if (!userAddress) return;
+    if (!userAddress) {
+      toast.info("Connect Wallet", "Please connect your wallet first.");
+      return;
+    }
     try {
       const tokenAddr = collateralToken === "xCTC" ? CONTRACT_ADDRESSES.xCTC : CONTRACT_ADDRESSES.xUSDC;
-      await requestFaucetTokens(tokenAddr, userAddress, 2000);
+      const receipt = await requestFaucetTokens(tokenAddr, userAddress, 2000);
+      toast.success("Faucet Minted!", `Minted 2,000 ${collateralToken} testnet tokens.`, receipt?.hash);
       await loadUserData(userAddress);
     } catch (e: any) {
-      setTxError(formatTransactionError(e));
+      const errMsg = formatTransactionError(e);
+      setTxError(errMsg);
+      toast.error("Faucet Error", errMsg);
     }
   };
 
