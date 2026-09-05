@@ -152,11 +152,8 @@ export default function FaucetPage() {
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-medium tracking-tight text-foreground">
-            Testnet faucet
+            Faucet
           </h1>
-          <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed max-w-md">
-            Mint simulated collateral and borrow assets to test undercollateralized loans and liquidity provisioning.
-          </p>
         </div>
 
         {userAddress && (
