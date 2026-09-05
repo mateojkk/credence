@@ -24,3 +24,5 @@ out/
 frontend/out/
 public/*.webm
 public/*.mp4
+*voiceover*
+*VOICEOVER*
