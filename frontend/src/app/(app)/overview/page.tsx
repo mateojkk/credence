@@ -198,6 +198,7 @@ export default function OverviewPage() {
     0
   );
   const suppliedUSD = supplies.xUSDC * 1.0 + supplies.xCTC * 2.5;
+  const walletUSD = balances.xUSDC * 1.0 + balances.xCTC * 2.5;
   const netPortfolioUSD = suppliedUSD + totalCollateralLockedUSD - totalBorrowedUSD;
 
   const usdcReserve = reserves.find((r) => r.symbol === "xUSDC");
@@ -263,7 +264,7 @@ export default function OverviewPage() {
       ) : (
         <>
           {/* Top KPI Ribbon */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {/* Card 1: Net Portfolio Value */}
             <div className="glass-card p-5 space-y-2">
               <span className="block text-[11px] uppercase tracking-wider font-mono text-faint">
@@ -272,6 +273,23 @@ export default function OverviewPage() {
               <span className="tnum block text-2xl font-medium text-foreground">
                 ${netPortfolioUSD.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
+              <span className="block text-[10px] font-mono text-muted-foreground pt-1">
+                Protocol positions
+              </span>
+            </div>
+
+            {/* Card 2: Wallet Available Balance */}
+            <div className="glass-card p-5 space-y-2">
+              <span className="block text-[11px] uppercase tracking-wider font-mono text-faint">
+                Wallet Balance
+              </span>
+              <span className="tnum block text-2xl font-medium text-foreground">
+                ${walletUSD.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </span>
+              <div className="flex justify-between text-[11px] font-mono text-muted-foreground pt-1">
+                <span>{balances.xCTC.toFixed(0)} xCTC</span>
+                <span>{balances.xUSDC.toFixed(0)} xUSDC</span>
+              </div>
             </div>
 
             {/* Card 2: Attested Credit Standing */}
@@ -544,6 +562,76 @@ export default function OverviewPage() {
                   >
                     Withdraw
                   </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Section 3: Available Wallet Assets */}
+          <section className="glass-card p-6 sm:p-7 space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <h2 className="text-base font-medium text-foreground tracking-tight">
+                  Available Wallet Assets
+                </h2>
+                <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-surface-2 text-faint">
+                  ${walletUSD.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} on-hand
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono">
+              {/* Native CTC */}
+              <div className="p-4 rounded-2xl bg-surface-2/60 space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground">Native CTC</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-surface-2 text-faint">Gas</span>
+                </div>
+                <div className="tnum text-xl font-medium text-foreground">
+                  {balances.nativeCTC.toFixed(3)} CTC
+                </div>
+                <span className="block text-[11px] text-faint">
+                  Gas execution token
+                </span>
+              </div>
+
+              {/* xCTC */}
+              <div className="p-4 rounded-2xl bg-surface-2/60 space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground">Credence CTC (xCTC)</span>
+                  <span className="text-[10px] text-accent font-medium">$2.50 USD</span>
+                </div>
+                <div className="tnum text-xl font-medium text-foreground">
+                  {balances.xCTC.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </div>
+                <div className="flex items-center justify-between pt-1">
+                  <span className="text-[11px] text-faint">
+                    ≈ ${(balances.xCTC * 2.5).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD
+                  </span>
+                  <Link href="/borrow" className="text-xs text-accent hover:underline flex items-center gap-0.5">
+                    <span>Borrow</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* xUSDC */}
+              <div className="p-4 rounded-2xl bg-surface-2/60 space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-muted-foreground">Credence USD (xUSDC)</span>
+                  <span className="text-[10px] text-positive font-medium">$1.00 USD</span>
+                </div>
+                <div className="tnum text-xl font-medium text-foreground">
+                  {balances.xUSDC.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </div>
+                <div className="flex items-center justify-between pt-1">
+                  <span className="text-[11px] text-faint">
+                    ≈ ${(balances.xUSDC * 1.0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD
+                  </span>
+                  <Link href="/lend" className="text-xs text-positive hover:underline flex items-center gap-0.5">
+                    <span>Supply</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </Link>
                 </div>
               </div>
             </div>
