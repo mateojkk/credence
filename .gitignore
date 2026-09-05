@@ -15,3 +15,12 @@ contracts/bin/
 DEMO_SCRIPT.md
 docs/DEMO_SCRIPT.md
 *demo_script*
+*.webm
+*.mp4
+*.mov
+*.mkv
+*shot*
+out/
+frontend/out/
+public/*.webm
+public/*.mp4

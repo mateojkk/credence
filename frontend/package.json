@@ -6,9 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "video:preview": "remotion studio src/remotion/index.ts --public-dir=public",
+    "video:render": "remotion render src/remotion/index.ts CredenceDemo out/demo.mp4 --public-dir=public",
+    "video:render-webm": "remotion render src/remotion/index.ts CredenceDemo out/demo.webm --public-dir=public"
   },
   "dependencies": {
+    "@remotion/cli": "^4.0.521",
+    "@remotion/media-utils": "^4.0.521",
+    "@remotion/player": "^4.0.521",
     "clsx": "^2.1.1",
     "ethers": "^6.13.1",
     "framer-motion": "^11.2.12",
@@ -16,6 +22,7 @@
     "next": "^14.2.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "remotion": "^4.0.521",
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
