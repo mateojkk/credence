@@ -9,13 +9,10 @@ import {
   ArrowRight,
   ArrowUpRight,
   Plus,
-  Copy,
-  Check,
 } from "lucide-react";
 import { CONTRACT_ADDRESSES, NETWORKS } from "@/lib/constants";
 import { useToast } from "@/components/Toast";
 import {
-  fetchUserBalances,
   requestFaucetTokens,
   formatTransactionError,
   addTokenToWallet,
@@ -24,7 +21,6 @@ import {
 export default function FaucetPage() {
   const toast = useToast();
   const [userAddress, setUserAddress] = useState<string>("");
-  const [balances, setBalances] = useState({ nativeCTC: 0, xUSDC: 0, xCTC: 0 });
   const [isLoading, setIsLoading] = useState(false);
 
   // Mint states
@@ -34,21 +30,12 @@ export default function FaucetPage() {
   const [isMintingBundle, setIsMintingBundle] = useState(false);
 
   // Status feedback
-  const [copied, setCopied] = useState(false);
   const [addedToken, setAddedToken] = useState<string | null>(null);
 
   const explorer = NETWORKS.CREDITCOIN_TESTNET.explorer;
 
   const loadUserData = async (addr: string) => {
-    setIsLoading(true);
-    try {
-      const bals = await fetchUserBalances(addr);
-      setBalances(bals);
-    } catch (e) {
-      console.warn("Balance load warning:", e);
-    } finally {
-      setIsLoading(false);
-    }
+    setUserAddress(addr);
   };
 
   useEffect(() => {
@@ -69,7 +56,6 @@ export default function FaucetPage() {
           loadUserData(accounts[0]);
         } else {
           setUserAddress("");
-          setBalances({ nativeCTC: 0, xUSDC: 0, xCTC: 0 });
         }
       };
 
@@ -139,100 +125,14 @@ export default function FaucetPage() {
     }
   };
 
-  const handleCopyAddress = () => {
-    if (!userAddress) return;
-    navigator.clipboard.writeText(userAddress);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Page Header */}
-      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-medium tracking-tight text-foreground">
-            Faucet
-          </h1>
-        </div>
-
-        {userAddress && (
-          <button
-            onClick={() => loadUserData(userAddress)}
-            disabled={isLoading}
-            className="inline-flex items-center gap-2 self-start sm:self-auto rounded-lg bg-surface-2 px-3.5 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors disabled:opacity-60"
-          >
-            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? "animate-spin" : ""}`} />
-            <span>Refresh</span>
-          </button>
-        )}
+      <header className="pb-2">
+        <h1 className="text-2xl font-medium tracking-tight text-foreground">
+          Faucet
+        </h1>
       </header>
-
-      {/* Wallet Status & Live Balances */}
-      <section className="glass-card p-5 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-hairline text-xs font-mono">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <span>Recipient:</span>
-            {userAddress ? (
-              <span className="flex items-center gap-1.5 text-foreground font-medium">
-                <span>{`${userAddress.slice(0, 8)}…${userAddress.slice(-6)}`}</span>
-                <button
-                  type="button"
-                  onClick={handleCopyAddress}
-                  className="text-faint hover:text-foreground transition-colors"
-                  title="Copy address"
-                >
-                  {copied ? <Check className="w-3.5 h-3.5 text-positive" /> : <Copy className="w-3.5 h-3.5" />}
-                </button>
-              </span>
-            ) : (
-              <span className="text-faint">Wallet not connected</span>
-            )}
-          </div>
-          <div className="flex items-center gap-1.5 text-xs text-positive font-mono">
-            <span className="w-1.5 h-1.5 rounded-full bg-positive animate-pulse" />
-            <span>Connected</span>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div className="p-3.5 rounded-xl bg-surface-2/40">
-            <span className="block text-[10px] uppercase tracking-[0.12em] text-faint">
-              Native CTC
-            </span>
-            <span className="tnum block text-xl font-medium text-foreground mt-1">
-              {balances.nativeCTC.toFixed(3)}
-            </span>
-            <span className="block text-[11px] text-faint mt-1 font-mono">
-              Gas token
-            </span>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-surface-2/40">
-            <span className="block text-[10px] uppercase tracking-[0.12em] text-faint">
-              xCTC balance
-            </span>
-            <span className="tnum block text-xl font-medium text-foreground mt-1">
-              {balances.xCTC.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
-            </span>
-            <span className="block text-[11px] text-accent mt-1 font-mono">
-              Collateral · $2.50 USD
-            </span>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-surface-2/40">
-            <span className="block text-[10px] uppercase tracking-[0.12em] text-faint">
-              xUSDC balance
-            </span>
-            <span className="tnum block text-xl font-medium text-foreground mt-1">
-              {balances.xUSDC.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
-            </span>
-            <span className="block text-[11px] text-positive mt-1 font-mono">
-              Borrow asset · $1.00 USD
-            </span>
-          </div>
-        </div>
-      </section>
 
       {/* 1-Click Starter Pack Banner */}
       <section className="glass-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
