@@ -9,7 +9,6 @@ import {
   executeSupply,
   executeWithdraw,
   connectBrowserWallet,
-  requestFaucetTokens,
   formatTransactionError,
   PoolReserveData,
 } from "@/lib/web3";
@@ -17,7 +16,6 @@ import { useToast } from "@/components/Toast";
 import {
   ArrowDownToLine,
   ArrowUpFromLine,
-  Droplet,
   RefreshCw,
 } from "lucide-react";
 
@@ -35,7 +33,6 @@ export default function LendPage() {
   const [amount, setAmount] = useState<string>("500");
   const [mode, setMode] = useState<"supply" | "withdraw">("supply");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [faucetLoading, setFaucetLoading] = useState(false);
 
   const loadData = async (addr: string) => {
     setIsLoadingPools(true);
@@ -177,28 +174,6 @@ export default function LendPage() {
     }
   };
 
-  const handleFaucet = async (tokenSymbol: "xUSDC" | "xCTC") => {
-    if (!userAddress) {
-      toast.info("Connect Wallet", "Connect your wallet to claim testnet tokens.");
-      return;
-    }
-    setFaucetLoading(true);
-    try {
-      const targetAddr = tokenSymbol === "xUSDC" ? CONTRACT_ADDRESSES.xUSDC : CONTRACT_ADDRESSES.xCTC;
-      const receipt = await requestFaucetTokens(targetAddr, userAddress, 1000);
-      toast.success(
-        "Faucet Claimed!",
-        `Minted 1,000 ${tokenSymbol} testnet tokens to your address.`,
-        receipt?.hash
-      );
-      await loadData(userAddress);
-    } catch (err: any) {
-      toast.error("Faucet Error", formatTransactionError(err));
-    } finally {
-      setFaucetLoading(false);
-    }
-  };
-
   const handleSetPercent = (pct: number) => {
     const maxVal = mode === "supply" ? userBalanceForSelected : userSuppliedForSelected;
     const computed = (maxVal * (pct / 100)).toFixed(2);
@@ -207,41 +182,16 @@ export default function LendPage() {
 
   return (
     <div className="space-y-8 max-w-6xl mx-auto">
-      {/* Header & Faucet Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-medium tracking-tight text-foreground">
-              Supply
-            </h1>
-            <span className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-positive/10 text-positive text-xs font-mono">
-              <span className="w-1.5 h-1.5 rounded-full bg-positive animate-pulse" />
-              CC3 Testnet
-            </span>
-          </div>
-        </div>
-
-        {/* Testnet faucets */}
-        <div className="flex items-center gap-2.5">
-          <button
-            onClick={() => handleFaucet("xUSDC")}
-            disabled={faucetLoading}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-surface-2 text-xs text-muted-foreground hover:text-foreground transition-all disabled:opacity-50"
-            title="Claim 1,000 xUSDC testnet tokens"
-          >
-            <Droplet className="w-3.5 h-3.5 text-accent" />
-            <span className="font-mono font-medium">+1,000 xUSDC</span>
-          </button>
-
-          <button
-            onClick={() => handleFaucet("xCTC")}
-            disabled={faucetLoading}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-surface-2 text-xs text-muted-foreground hover:text-foreground transition-all disabled:opacity-50"
-            title="Claim 1,000 xCTC testnet tokens"
-          >
-            <Droplet className="w-3.5 h-3.5 text-accent" />
-            <span className="font-mono font-medium">+1,000 xCTC</span>
-          </button>
+      {/* Header */}
+      <div className="flex items-center justify-between pb-2">
+        <div className="flex items-center gap-2">
+          <h1 className="text-2xl font-medium tracking-tight text-foreground">
+            Supply
+          </h1>
+          <span className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-positive/10 text-positive text-xs font-mono">
+            <span className="w-1.5 h-1.5 rounded-full bg-positive animate-pulse" />
+            CC3 Testnet
+          </span>
         </div>
       </div>
 
