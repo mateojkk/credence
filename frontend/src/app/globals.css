@@ -78,6 +78,13 @@ body {
 /* ---------------------------------------------------------------------------
    Remove outline and focus rings from buttons, inputs, and interactive cards
 --------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
+}
+
 button,
 [role="button"],
 a,

@@ -108,7 +108,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 30, scale: 0.95 }}
               transition={{ duration: 0.22, ease: "easeOut" }}
-              className="pointer-events-auto rounded-2xl bg-surface/95 border border-border p-4 shadow-2xl shadow-black/80 backdrop-blur-xl flex items-start gap-3 relative overflow-hidden"
+              className="pointer-events-auto rounded-2xl bg-surface/95 p-4 shadow-2xl shadow-black/90 backdrop-blur-xl flex items-start gap-3 relative overflow-hidden"
             >
               {/* Type Accent Bar */}
               <div

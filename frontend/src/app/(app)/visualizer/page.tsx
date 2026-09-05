@@ -217,7 +217,7 @@ export default function ProofExplorerPage() {
                 <select
                   value={actionType}
                   onChange={(e) => setActionType(Number(e.target.value))}
-                  className="w-full bg-surface-2 rounded-xl px-3.5 py-2.5 text-sm font-mono text-foreground focus:outline-none focus:ring-1 focus:ring-accent"
+                  className="w-full bg-surface-2 rounded-xl px-3.5 py-2.5 text-sm font-mono text-foreground focus:outline-none"
                 >
                   <option value={0}>REPAYMENT_LOGGED</option>
                   <option value={1}>INVOICE_SETTLED</option>
@@ -234,7 +234,7 @@ export default function ProofExplorerPage() {
                   value={amountUSD}
                   onChange={(e) => setAmountUSD(e.target.value)}
                   placeholder="25000"
-                  className="w-full bg-surface-2 rounded-xl px-3.5 py-2.5 text-sm font-mono text-foreground focus:outline-none focus:ring-1 focus:ring-accent"
+                  className="w-full bg-surface-2 rounded-xl px-3.5 py-2.5 text-sm font-mono text-foreground focus:outline-none"
                   required
                 />
               </div>
@@ -250,7 +250,7 @@ export default function ProofExplorerPage() {
           </form>
 
           {/* Raw Proof Details Preview */}
-          <div className="p-4 rounded-xl bg-surface-2 border border-hairline space-y-2 text-xs font-mono">
+          <div className="p-4 rounded-xl bg-surface-2 space-y-2 text-xs font-mono">
             <div className="flex justify-between text-muted-foreground">
               <span>Receipts Root:</span>
               <span className="text-foreground">

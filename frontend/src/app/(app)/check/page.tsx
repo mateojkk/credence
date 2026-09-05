@@ -103,7 +103,7 @@ export default function DashboardPage() {
             value={lookupAddress}
             onChange={(e) => setLookupAddress(e.target.value)}
             placeholder="0x… enter any address to scan on Creditcoin"
-            className="w-full bg-surface-2 border border-hairline rounded-xl pl-10 pr-4 py-3 text-sm font-mono text-foreground placeholder-faint focus:outline-none focus:ring-1 focus:ring-accent transition-colors"
+            className="w-full bg-surface-2 rounded-xl pl-10 pr-4 py-3 text-sm font-mono text-foreground placeholder-faint focus:outline-none transition-colors"
           />
         </div>
         <button
@@ -126,7 +126,7 @@ export default function DashboardPage() {
               setLookupAddress(connectedAddress);
               loadProfile(connectedAddress);
             }}
-            className="px-2.5 py-1 rounded-full border border-hairline bg-surface-2 text-muted-foreground hover:text-foreground transition-colors font-mono"
+            className="px-2.5 py-1 rounded-full bg-surface-2 text-muted-foreground hover:text-foreground transition-colors font-mono"
           >
             {connectedAddress.slice(0, 8)}...{connectedAddress.slice(-6)}
           </button>

@@ -17,14 +17,8 @@ import { useToast } from "@/components/Toast";
 import {
   ArrowDownToLine,
   ArrowUpFromLine,
-  ExternalLink,
   Droplet,
-  ShieldCheck,
-  TrendingUp,
-  Coins,
-  Wallet,
   RefreshCw,
-  Sparkles,
 } from "lucide-react";
 
 export default function LendPage() {
@@ -214,7 +208,7 @@ export default function LendPage() {
   return (
     <div className="space-y-8 max-w-6xl mx-auto">
       {/* Header & Faucet Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-hairline pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2">
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-medium tracking-tight text-foreground">
@@ -235,7 +229,7 @@ export default function LendPage() {
           <button
             onClick={() => handleFaucet("xUSDC")}
             disabled={faucetLoading}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-surface-2 border border-border text-xs text-muted-foreground hover:text-foreground hover:border-muted-foreground/40 transition-all disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-surface-2 text-xs text-muted-foreground hover:text-foreground transition-all disabled:opacity-50"
             title="Claim 1,000 xUSDC testnet tokens"
           >
             <Droplet className="w-3.5 h-3.5 text-accent" />
@@ -245,7 +239,7 @@ export default function LendPage() {
           <button
             onClick={() => handleFaucet("xCTC")}
             disabled={faucetLoading}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-surface-2 border border-border text-xs text-muted-foreground hover:text-foreground hover:border-muted-foreground/40 transition-all disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-surface-2 text-xs text-muted-foreground hover:text-foreground transition-all disabled:opacity-50"
             title="Claim 1,000 xCTC testnet tokens"
           >
             <Droplet className="w-3.5 h-3.5 text-accent" />
@@ -267,13 +261,13 @@ export default function LendPage() {
           </div>
 
           <div className="flex items-center gap-4 text-xs font-mono">
-            <div className="bg-surface-2 px-3 py-1.5 rounded-xl border border-hairline">
+            <div className="bg-surface-2 px-3 py-1.5 rounded-xl">
               <span className="text-muted-foreground">Total Supplied: </span>
               <span className="text-foreground font-medium tnum">
                 ${totalSuppliedUSD.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
             </div>
-            <div className="bg-surface-2 px-3 py-1.5 rounded-xl border border-hairline">
+            <div className="bg-surface-2 px-3 py-1.5 rounded-xl">
               <span className="text-muted-foreground">Blended APY: </span>
               <span className="text-positive font-medium tnum">{blendedApy}%</span>
             </div>
@@ -283,10 +277,10 @@ export default function LendPage() {
         {/* Position Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* xUSDC Position */}
-          <div className="p-5 rounded-2xl bg-surface-2/60 border border-hairline space-y-4">
+          <div className="p-5 rounded-2xl bg-surface-2/60 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-card border border-border flex items-center justify-center font-mono font-medium text-accent">
+                <div className="w-10 h-10 rounded-xl bg-card flex items-center justify-center font-mono font-medium text-accent">
                   $
                 </div>
                 <div>
@@ -302,7 +296,7 @@ export default function LendPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-hairline text-xs font-mono">
+            <div className="grid grid-cols-2 gap-2 pt-2 text-xs font-mono">
               <div>
                 <span className="text-muted-foreground block text-[11px]">Your Supplied Balance</span>
                 <span className="text-foreground font-medium tnum text-sm">
@@ -328,7 +322,7 @@ export default function LendPage() {
                 className={`flex-1 py-1.5 rounded-lg text-xs font-mono transition-all ${
                   selectedToken === "xUSDC" && mode === "supply"
                     ? "bg-primary text-primary-foreground font-medium"
-                    : "bg-surface text-muted-foreground hover:text-foreground border border-hairline"
+                    : "bg-surface text-muted-foreground hover:text-foreground"
                 }`}
               >
                 + Supply More
@@ -344,7 +338,7 @@ export default function LendPage() {
                 className={`flex-1 py-1.5 rounded-lg text-xs font-mono transition-all disabled:opacity-40 ${
                   selectedToken === "xUSDC" && mode === "withdraw"
                     ? "bg-primary text-primary-foreground font-medium"
-                    : "bg-surface text-muted-foreground hover:text-foreground border border-hairline"
+                    : "bg-surface text-muted-foreground hover:text-foreground"
                 }`}
               >
                 Withdraw
@@ -353,10 +347,10 @@ export default function LendPage() {
           </div>
 
           {/* xCTC Position */}
-          <div className="p-5 rounded-2xl bg-surface-2/60 border border-hairline space-y-4">
+          <div className="p-5 rounded-2xl bg-surface-2/60 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-card border border-border flex items-center justify-center font-mono font-medium text-accent">
+                <div className="w-10 h-10 rounded-xl bg-card flex items-center justify-center font-mono font-medium text-accent">
                   C
                 </div>
                 <div>
@@ -372,7 +366,7 @@ export default function LendPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-hairline text-xs font-mono">
+            <div className="grid grid-cols-2 gap-2 pt-2 text-xs font-mono">
               <div>
                 <span className="text-muted-foreground block text-[11px]">Your Supplied Balance</span>
                 <span className="text-foreground font-medium tnum text-sm">
@@ -398,7 +392,7 @@ export default function LendPage() {
                 className={`flex-1 py-1.5 rounded-lg text-xs font-mono transition-all ${
                   selectedToken === "xCTC" && mode === "supply"
                     ? "bg-primary text-primary-foreground font-medium"
-                    : "bg-surface text-muted-foreground hover:text-foreground border border-hairline"
+                    : "bg-surface text-muted-foreground hover:text-foreground"
                 }`}
               >
                 + Supply More
@@ -414,7 +408,7 @@ export default function LendPage() {
                 className={`flex-1 py-1.5 rounded-lg text-xs font-mono transition-all disabled:opacity-40 ${
                   selectedToken === "xCTC" && mode === "withdraw"
                     ? "bg-primary text-primary-foreground font-medium"
-                    : "bg-surface text-muted-foreground hover:text-foreground border border-hairline"
+                    : "bg-surface text-muted-foreground hover:text-foreground"
                 }`}
               >
                 Withdraw
@@ -458,15 +452,15 @@ export default function LendPage() {
                   <div
                     key={res.symbol}
                     onClick={() => setSelectedToken(res.symbol as "xUSDC" | "xCTC")}
-                    className={`glass-card p-6 space-y-4 cursor-pointer transition-all border ${
+                    className={`glass-card p-6 space-y-4 cursor-pointer transition-all ${
                       isSelected
-                        ? "border-accent/40 bg-surface-2/80 shadow-lg shadow-accent/5"
-                        : "border-transparent hover:border-border"
+                        ? "bg-surface-2/90 shadow-lg shadow-black/40"
+                        : "hover:bg-surface-2/50"
                     }`}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-surface-2 border border-border flex items-center justify-center text-base font-medium font-mono text-foreground">
+                        <div className="w-10 h-10 rounded-xl bg-surface-2 flex items-center justify-center text-base font-medium font-mono text-foreground">
                           {res.symbol === "xUSDC" ? "$" : "C"}
                         </div>
                         <div>
@@ -492,7 +486,7 @@ export default function LendPage() {
                     </div>
 
                     {/* Stat Badges */}
-                    <div className="grid grid-cols-3 gap-3 p-3.5 rounded-xl bg-surface/80 border border-hairline text-xs font-mono">
+                    <div className="grid grid-cols-3 gap-3 p-3.5 rounded-xl bg-surface/80 text-xs font-mono">
                       <div>
                         <span className="text-faint block text-[11px]">Total Supplied</span>
                         <span className="text-foreground font-medium tnum">
@@ -515,7 +509,7 @@ export default function LendPage() {
 
                     {/* Utilization Progress Bar */}
                     <div className="space-y-1.5">
-                      <div className="w-full h-2 rounded-full bg-background overflow-hidden border border-hairline">
+                      <div className="w-full h-2 rounded-full bg-background overflow-hidden">
                         <div
                           className={`h-full rounded-full transition-all duration-500 ${
                             res.utilizationRate > 80
@@ -542,13 +536,13 @@ export default function LendPage() {
         {/* Right Col: Supply / Withdraw Action Terminal */}
         <div className="lg:col-span-5 glass-card p-6 sm:p-7 space-y-6 sticky top-24">
           {/* Mode Switch Tabs */}
-          <div className="flex p-1 rounded-xl bg-surface-2 border border-hairline font-mono text-xs">
+          <div className="flex p-1 rounded-xl bg-surface-2 font-mono text-xs">
             <button
               type="button"
               onClick={() => setMode("supply")}
               className={`flex-1 py-2 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                 mode === "supply"
-                  ? "bg-card text-foreground font-medium shadow-sm border border-border"
+                  ? "bg-card text-foreground font-medium shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -560,7 +554,7 @@ export default function LendPage() {
               onClick={() => setMode("withdraw")}
               className={`flex-1 py-2 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                 mode === "withdraw"
-                  ? "bg-card text-foreground font-medium shadow-sm border border-border"
+                  ? "bg-card text-foreground font-medium shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -588,10 +582,10 @@ export default function LendPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedToken("xUSDC")}
-                  className={`p-3 rounded-xl border flex items-center gap-2.5 transition-all ${
+                  className={`p-3 rounded-xl flex items-center gap-2.5 transition-all ${
                     selectedToken === "xUSDC"
-                      ? "bg-surface-2 border-accent/40 text-foreground"
-                      : "bg-card border-border text-muted-foreground hover:text-foreground"
+                      ? "bg-surface-2 text-foreground shadow-sm"
+                      : "bg-card text-muted-foreground hover:text-foreground hover:bg-surface-2/60"
                   }`}
                 >
                   <span className="w-6 h-6 rounded-md bg-surface flex items-center justify-center font-mono text-xs text-accent">
@@ -608,10 +602,10 @@ export default function LendPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedToken("xCTC")}
-                  className={`p-3 rounded-xl border flex items-center gap-2.5 transition-all ${
+                  className={`p-3 rounded-xl flex items-center gap-2.5 transition-all ${
                     selectedToken === "xCTC"
-                      ? "bg-surface-2 border-accent/40 text-foreground"
-                      : "bg-card border-border text-muted-foreground hover:text-foreground"
+                      ? "bg-surface-2 text-foreground shadow-sm"
+                      : "bg-card text-muted-foreground hover:text-foreground hover:bg-surface-2/60"
                   }`}
                 >
                   <span className="w-6 h-6 rounded-md bg-surface flex items-center justify-center font-mono text-xs text-accent">
@@ -636,7 +630,7 @@ export default function LendPage() {
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-surface-2 border border-hairline focus-within:border-accent/40 transition-colors">
+              <div className="p-3.5 rounded-2xl bg-surface-2 transition-colors">
                 <div className="flex items-center gap-2">
                   <input
                     type="number"
@@ -648,13 +642,13 @@ export default function LendPage() {
                     className="flex-grow bg-transparent text-2xl font-medium font-mono text-foreground focus:outline-none placeholder:text-faint"
                     required
                   />
-                  <span className="font-mono text-sm font-medium text-foreground px-2.5 py-1 rounded-lg bg-card border border-border">
+                  <span className="font-mono text-sm font-medium text-foreground px-2.5 py-1 rounded-lg bg-card">
                     {selectedToken}
                   </span>
                 </div>
 
                 {/* Percentage Presets */}
-                <div className="flex items-center gap-1.5 mt-3 pt-2.5 border-t border-hairline/60 font-mono text-[11px]">
+                <div className="flex items-center gap-1.5 mt-3 pt-2.5 font-mono text-[11px]">
                   <button
                     type="button"
                     onClick={() => handleSetPercent(25)}
@@ -688,7 +682,7 @@ export default function LendPage() {
             </div>
 
             {/* Impact Details Preview */}
-            <div className="p-4 rounded-xl bg-surface border border-hairline space-y-2 text-xs font-mono">
+            <div className="p-4 rounded-xl bg-surface space-y-2 text-xs font-mono">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Pool Supply APY</span>
                 <span className="tnum text-positive font-medium">{activeReserve?.supplyApy || 0}%</span>

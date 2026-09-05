@@ -21,18 +21,11 @@ import { CONTRACT_ADDRESSES, NETWORKS } from "@/lib/constants";
 import {
   ArrowRight,
   ArrowUpRight,
-  ShieldCheck,
-  TrendingUp,
   Coins,
   Wallet,
-  CheckCircle2,
-  AlertCircle,
-  Clock,
   RefreshCw,
   ExternalLink,
   Plus,
-  ArrowDownToLine,
-  ArrowUpFromLine,
   X,
 } from "lucide-react";
 
@@ -214,7 +207,7 @@ export default function OverviewPage() {
   return (
     <div className="space-y-8 max-w-6xl mx-auto">
       {/* Header */}
-      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-hairline pb-6">
+      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2">
         <div>
           <div className="flex items-center gap-2.5">
             <h1 className="text-2xl font-medium tracking-tight text-foreground">
@@ -251,7 +244,7 @@ export default function OverviewPage() {
           <button
             onClick={() => load(userAddress)}
             disabled={isLoading}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-surface-2 border border-border text-xs text-muted-foreground hover:text-foreground transition-all disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-surface-2 text-xs text-muted-foreground hover:text-foreground transition-all disabled:opacity-50"
             title="Refresh on-chain data"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? "animate-spin" : ""}`} />
@@ -261,7 +254,7 @@ export default function OverviewPage() {
           {userAddress ? (
             <Link
               href={`/check?address=${userAddress}`}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-surface-2 border border-border text-xs text-accent hover:border-accent/40 transition-all font-mono"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-surface-2 text-xs text-accent hover:bg-surface-2/80 transition-all font-mono"
             >
               <span>Scan Credit</span>
               <ArrowUpRight className="w-3 h-3" />
@@ -279,7 +272,7 @@ export default function OverviewPage() {
       </header>
 
       {!userAddress && !isLoading ? (
-        <section className="glass-card p-12 text-center space-y-4 max-w-xl mx-auto border border-border">
+        <section className="glass-card p-12 text-center space-y-4 max-w-xl mx-auto">
           <Wallet className="w-10 h-10 text-accent mx-auto" />
           <h2 className="text-lg font-medium text-foreground">Wallet Not Connected</h2>
           <p className="text-xs text-muted-foreground leading-relaxed">
@@ -298,7 +291,7 @@ export default function OverviewPage() {
           {/* Top KPI Ribbon */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Card 1: Net Portfolio Value */}
-            <div className="glass-card p-5 space-y-2 border border-hairline">
+            <div className="glass-card p-5 space-y-2">
               <span className="block text-[11px] uppercase tracking-wider font-mono text-faint">
                 Net Portfolio Balance
               </span>
@@ -311,7 +304,7 @@ export default function OverviewPage() {
             </div>
 
             {/* Card 2: Attested Credit Standing */}
-            <div className="glass-card p-5 space-y-2 border border-hairline">
+            <div className="glass-card p-5 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="block text-[11px] uppercase tracking-wider font-mono text-faint">
                   Attested Credit Score
@@ -333,7 +326,7 @@ export default function OverviewPage() {
             </div>
 
             {/* Card 3: Total Supplied Assets */}
-            <div className="glass-card p-5 space-y-2 border border-hairline">
+            <div className="glass-card p-5 space-y-2">
               <span className="block text-[11px] uppercase tracking-wider font-mono text-faint">
                 Total Supplied Assets
               </span>
@@ -347,7 +340,7 @@ export default function OverviewPage() {
             </div>
 
             {/* Card 4: Active Borrowed Debt */}
-            <div className="glass-card p-5 space-y-2 border border-hairline">
+            <div className="glass-card p-5 space-y-2">
               <span className="block text-[11px] uppercase tracking-wider font-mono text-faint">
                 Active Borrowed Debt
               </span>
@@ -362,7 +355,7 @@ export default function OverviewPage() {
           </div>
 
           {/* Section 1: Active Borrowed Loans Management */}
-          <section className="glass-card p-6 sm:p-7 space-y-5 border border-hairline">
+          <section className="glass-card p-6 sm:p-7 space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <div className="flex items-center gap-2">
@@ -380,7 +373,7 @@ export default function OverviewPage() {
 
               <Link
                 href="/borrow"
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-surface-2 border border-border text-xs text-foreground hover:border-accent/40 font-mono transition-all self-start sm:self-auto"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-surface-2 text-xs text-foreground hover:bg-surface-2/80 font-mono transition-all self-start sm:self-auto"
               >
                 <Plus className="w-3.5 h-3.5 text-accent" />
                 <span>Borrow Capital</span>
@@ -388,7 +381,7 @@ export default function OverviewPage() {
             </div>
 
             {loans.length === 0 ? (
-              <div className="text-center py-10 rounded-2xl bg-surface-2/40 space-y-2 border border-hairline/60">
+              <div className="text-center py-10 rounded-2xl bg-surface-2/40 space-y-2">
                 <Coins className="w-8 h-8 text-faint mx-auto" />
                 <p className="text-sm text-foreground font-medium">No Active Loans</p>
                 <p className="text-xs text-muted-foreground max-w-sm mx-auto">
@@ -408,7 +401,7 @@ export default function OverviewPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs font-mono">
                   <thead>
-                    <tr className="border-b border-hairline text-muted-foreground uppercase text-[11px]">
+                    <tr className="text-muted-foreground uppercase text-[11px]">
                       <th className="pb-3">Loan ID</th>
                       <th className="pb-3">Principal</th>
                       <th className="pb-3">Total Owed</th>
@@ -419,7 +412,7 @@ export default function OverviewPage() {
                       <th className="pb-3 text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-hairline">
+                  <tbody className="divide-y divide-hairline/40">
                     {loans.map((loan) => (
                       <tr key={loan.loanId} className="text-foreground/85 hover:bg-surface-2/30 transition-colors">
                         <td className="py-4 font-medium text-foreground">#{loan.loanId}</td>
@@ -477,7 +470,7 @@ export default function OverviewPage() {
           </section>
 
           {/* Section 2: Supplied Positions Management */}
-          <section className="glass-card p-6 sm:p-7 space-y-5 border border-hairline">
+          <section className="glass-card p-6 sm:p-7 space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <h2 className="text-base font-medium text-foreground tracking-tight">
@@ -490,7 +483,7 @@ export default function OverviewPage() {
 
               <Link
                 href="/lend"
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-surface-2 border border-border text-xs text-foreground hover:border-accent/40 font-mono transition-all self-start sm:self-auto"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-surface-2 text-xs text-foreground hover:bg-surface-2/80 font-mono transition-all self-start sm:self-auto"
               >
                 <Plus className="w-3.5 h-3.5 text-accent" />
                 <span>Deposit Assets</span>
@@ -499,10 +492,10 @@ export default function OverviewPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* xUSDC Supply Card */}
-              <div className="p-5 rounded-2xl bg-surface-2/60 border border-hairline space-y-4">
+              <div className="p-5 rounded-2xl bg-surface-2/60 space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-card border border-border flex items-center justify-center font-mono font-medium text-accent">
+                    <div className="w-10 h-10 rounded-xl bg-card flex items-center justify-center font-mono font-medium text-accent">
                       $
                     </div>
                     <div>
@@ -522,10 +515,10 @@ export default function OverviewPage() {
                   </div>
                 </div>
 
-                <div className="flex gap-2 pt-2 border-t border-hairline/60">
+                <div className="flex gap-2 pt-2">
                   <Link
                     href="/lend"
-                    className="flex-1 py-2 text-center rounded-lg bg-surface border border-border text-xs font-mono text-foreground hover:bg-surface-2 transition-colors"
+                    className="flex-1 py-2 text-center rounded-lg bg-surface text-xs font-mono text-foreground hover:bg-surface-2 transition-colors"
                   >
                     + Supply More
                   </Link>
@@ -539,7 +532,7 @@ export default function OverviewPage() {
                       })
                     }
                     disabled={supplies.xUSDC <= 0}
-                    className="flex-1 py-2 rounded-lg bg-surface-2 border border-border text-xs font-mono text-muted-foreground hover:text-foreground transition-colors disabled:opacity-40"
+                    className="flex-1 py-2 rounded-lg bg-surface-2 text-xs font-mono text-muted-foreground hover:text-foreground transition-colors disabled:opacity-40"
                   >
                     Withdraw
                   </button>
@@ -547,10 +540,10 @@ export default function OverviewPage() {
               </div>
 
               {/* xCTC Supply Card */}
-              <div className="p-5 rounded-2xl bg-surface-2/60 border border-hairline space-y-4">
+              <div className="p-5 rounded-2xl bg-surface-2/60 space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-card border border-border flex items-center justify-center font-mono font-medium text-accent">
+                    <div className="w-10 h-10 rounded-xl bg-card flex items-center justify-center font-mono font-medium text-accent">
                       C
                     </div>
                     <div>
@@ -570,10 +563,10 @@ export default function OverviewPage() {
                   </div>
                 </div>
 
-                <div className="flex gap-2 pt-2 border-t border-hairline/60">
+                <div className="flex gap-2 pt-2">
                   <Link
                     href="/lend"
-                    className="flex-1 py-2 text-center rounded-lg bg-surface border border-border text-xs font-mono text-foreground hover:bg-surface-2 transition-colors"
+                    className="flex-1 py-2 text-center rounded-lg bg-surface text-xs font-mono text-foreground hover:bg-surface-2 transition-colors"
                   >
                     + Supply More
                   </Link>
@@ -587,7 +580,7 @@ export default function OverviewPage() {
                       })
                     }
                     disabled={supplies.xCTC <= 0}
-                    className="flex-1 py-2 rounded-lg bg-surface-2 border border-border text-xs font-mono text-muted-foreground hover:text-foreground transition-colors disabled:opacity-40"
+                    className="flex-1 py-2 rounded-lg bg-surface-2 text-xs font-mono text-muted-foreground hover:text-foreground transition-colors disabled:opacity-40"
                   >
                     Withdraw
                   </button>
@@ -600,8 +593,8 @@ export default function OverviewPage() {
 
       {/* Withdraw Modal for Dashboard */}
       {withdrawModal.isOpen && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-md bg-surface border border-border rounded-2xl p-6 space-y-5 shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-md bg-surface rounded-2xl p-6 space-y-5 shadow-2xl">
             <div className="flex items-center justify-between">
               <h3 className="text-base font-medium text-foreground">
                 Withdraw {withdrawModal.token}
@@ -625,7 +618,7 @@ export default function OverviewPage() {
                       : `${supplies.xCTC.toFixed(2)} xCTC`}
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-surface-2 border border-hairline flex items-center gap-2">
+                <div className="p-3 rounded-xl bg-surface-2 flex items-center gap-2">
                   <input
                     type="number"
                     step="any"
@@ -657,7 +650,7 @@ export default function OverviewPage() {
                 <button
                   type="button"
                   onClick={() => setWithdrawModal({ isOpen: false, token: "xUSDC", amount: "" })}
-                  className="flex-1 py-2.5 rounded-xl border border-border text-xs font-mono text-muted-foreground hover:text-foreground"
+                  className="flex-1 py-2.5 rounded-xl bg-surface-2 text-xs font-mono text-muted-foreground hover:text-foreground"
                 >
                   Cancel
                 </button>
