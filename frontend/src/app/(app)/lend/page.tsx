@@ -212,16 +212,13 @@ export default function LendPage() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-medium tracking-tight text-foreground">
-              Supply Markets
+              Supply
             </h1>
             <span className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-positive/10 text-positive text-xs font-mono">
               <span className="w-1.5 h-1.5 rounded-full bg-positive animate-pulse" />
               CC3 Testnet
             </span>
           </div>
-          <p className="text-muted-foreground text-sm mt-1">
-            Deposit assets to provide cross-chain lending liquidity and earn yield from verified borrower repayments.
-          </p>
         </div>
 
         {/* Testnet faucets */}
@@ -255,9 +252,6 @@ export default function LendPage() {
             <h2 className="text-base font-medium text-foreground tracking-tight">
               Your Supplied Positions
             </h2>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Live deposits earning interest inside the Credence Lending Pool on Creditcoin.
-            </p>
           </div>
 
           <div className="flex items-center gap-4 text-xs font-mono">

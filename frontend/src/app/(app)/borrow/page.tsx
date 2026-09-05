@@ -470,7 +470,7 @@ export default function BorrowPage() {
         <div className="space-y-6">
           <div className="glass-card p-6 flex flex-col items-center justify-center">
             <CreditScoreGauge score={profile.score} size={180} />
-            <div className="mt-4 w-full pt-4 border-t border-hairline space-y-2 text-xs font-mono">
+            <div className="mt-4 w-full pt-2 space-y-2 text-xs font-mono">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Max LTV</span>
                 <span className="tnum text-accent font-bold">{profile.maxLtv}%</span>
@@ -502,14 +502,9 @@ export default function BorrowPage() {
       {/* Active Borrowed Positions Table & Repayments */}
       <div className="glass-card p-6 sm:p-8 space-y-4">
         <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-medium text-foreground tracking-tight">
-              Your Loans & Repayments
-            </h2>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Repay active loans to settle debt, reclaim your locked collateral, and build on-chain credit score.
-            </p>
-          </div>
+          <h2 className="text-base font-medium text-foreground tracking-tight">
+            Your Loans & Repayments
+          </h2>
           {loans.length > 0 && (
             <span className="text-xs font-mono text-faint">
               {loans.filter((l) => !l.isSettled && !l.isLiquidated).length} active loan{loans.length === 1 ? "" : "s"}
@@ -520,16 +515,13 @@ export default function BorrowPage() {
         {loans.length === 0 ? (
           <div className="text-center py-12 rounded-2xl bg-surface-2/30 space-y-2">
             <Coins className="w-8 h-8 text-faint mx-auto" />
-            <p className="text-sm text-muted-foreground">No active loans found for this address.</p>
-            <p className="text-xs text-faint font-mono">
-              Originate a loan above. Once borrowed, it will appear here with a 1-click Repay button.
-            </p>
+            <p className="text-sm text-muted-foreground">No active loans found.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs font-mono">
               <thead>
-                <tr className="border-b border-hairline text-muted-foreground uppercase">
+                <tr className="text-muted-foreground uppercase">
                   <th className="pb-3">Loan ID</th>
                   <th className="pb-3">Principal</th>
                   <th className="pb-3">Total Owed</th>

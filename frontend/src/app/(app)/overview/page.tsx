@@ -211,14 +211,14 @@ export default function OverviewPage() {
         <div>
           <div className="flex items-center gap-2.5">
             <h1 className="text-2xl font-medium tracking-tight text-foreground">
-              Portfolio Command Center
+              Overview
             </h1>
             <span className="px-2.5 py-0.5 rounded-full bg-positive/10 text-positive text-xs font-mono">
               Creditcoin CC3
             </span>
           </div>
-          <p className="text-sm text-muted-foreground mt-1 font-mono">
-            {userAddress ? (
+          {userAddress && (
+            <p className="text-sm text-muted-foreground mt-1 font-mono">
               <span className="flex items-center gap-2">
                 <span>Account:</span>
                 <span className="text-foreground">
@@ -233,10 +233,8 @@ export default function OverviewPage() {
                   <ExternalLink className="w-3 h-3" />
                 </a>
               </span>
-            ) : (
-              "Connect wallet to manage your sovereign credit and active positions."
-            )}
-          </p>
+            </p>
+          )}
         </div>
 
         {/* Quick actions top rail */}
@@ -298,9 +296,6 @@ export default function OverviewPage() {
               <span className="tnum block text-2xl font-medium text-foreground">
                 ${netPortfolioUSD.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
-              <span className="block text-[11px] font-mono text-muted-foreground">
-                Assets minus active debt
-              </span>
             </div>
 
             {/* Card 2: Attested Credit Standing */}
@@ -357,18 +352,13 @@ export default function OverviewPage() {
           {/* Section 1: Active Borrowed Loans Management */}
           <section className="glass-card p-6 sm:p-7 space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div>
-                <div className="flex items-center gap-2">
-                  <h2 className="text-base font-medium text-foreground tracking-tight">
-                    Active Borrowed Loans
-                  </h2>
-                  <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-surface-2 text-faint">
-                    {activeLoans.length} open
-                  </span>
-                </div>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Manage debt positions, check due dates, and execute 1-click repayments to reclaim collateral.
-                </p>
+              <div className="flex items-center gap-2">
+                <h2 className="text-base font-medium text-foreground tracking-tight">
+                  Active Borrowed Loans
+                </h2>
+                <span className="text-xs font-mono px-2 py-0.5 rounded-full bg-surface-2 text-faint">
+                  {activeLoans.length} open
+                </span>
               </div>
 
               <Link
@@ -381,18 +371,15 @@ export default function OverviewPage() {
             </div>
 
             {loans.length === 0 ? (
-              <div className="text-center py-10 rounded-2xl bg-surface-2/40 space-y-2">
+              <div className="text-center py-10 rounded-2xl bg-surface-2/40 space-y-3">
                 <Coins className="w-8 h-8 text-faint mx-auto" />
                 <p className="text-sm text-foreground font-medium">No Active Loans</p>
-                <p className="text-xs text-muted-foreground max-w-sm mx-auto">
-                  You have no outstanding debt. Borrow up to {profile.maxLtv}% LTV based on your attested reputation.
-                </p>
-                <div className="pt-2">
+                <div>
                   <Link
                     href="/borrow"
                     className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-primary-foreground font-medium text-xs hover:opacity-90 transition-all"
                   >
-                    <span>Originate Loan Now</span>
+                    <span>Borrow Against Credit</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
@@ -476,9 +463,6 @@ export default function OverviewPage() {
                 <h2 className="text-base font-medium text-foreground tracking-tight">
                   Your Supplied Assets & Yield
                 </h2>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Liquidity supplied to earn borrower interest. Withdraw anytime or deposit more.
-                </p>
               </div>
 
               <Link
