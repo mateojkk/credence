@@ -158,7 +158,7 @@ export default function FaucetPage() {
             Testnet faucet
           </h1>
           <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed max-w-md">
-            Mint simulated collateral and borrow assets directly on Creditcoin CC3 to test undercollateralized loans and liquidity provisioning.
+            Mint simulated collateral and borrow assets to test undercollateralized loans and liquidity provisioning.
           </p>
         </div>
 

@@ -184,15 +184,9 @@ export default function LendPage() {
     <div className="space-y-8 max-w-6xl mx-auto">
       {/* Header */}
       <div className="flex items-center justify-between pb-2">
-        <div className="flex items-center gap-2">
-          <h1 className="text-2xl font-medium tracking-tight text-foreground">
-            Supply
-          </h1>
-          <span className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-positive/10 text-positive text-xs font-mono">
-            <span className="w-1.5 h-1.5 rounded-full bg-positive animate-pulse" />
-            CC3 Testnet
-          </span>
-        </div>
+        <h1 className="text-2xl font-medium tracking-tight text-foreground">
+          Supply
+        </h1>
       </div>
 
       {/* Your Active Supply Positions Summary */}

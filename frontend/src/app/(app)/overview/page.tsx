@@ -209,14 +209,9 @@ export default function OverviewPage() {
       {/* Header */}
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2">
         <div>
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-2xl font-medium tracking-tight text-foreground">
-              Overview
-            </h1>
-            <span className="px-2.5 py-0.5 rounded-full bg-positive/10 text-positive text-xs font-mono">
-              Creditcoin CC3
-            </span>
-          </div>
+          <h1 className="text-2xl font-medium tracking-tight text-foreground">
+            Overview
+          </h1>
           {userAddress && (
             <p className="text-sm text-muted-foreground mt-1 font-mono">
               <span className="flex items-center gap-2">
