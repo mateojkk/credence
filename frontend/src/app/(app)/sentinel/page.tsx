@@ -155,17 +155,12 @@ export default function SentinelPage() {
           <h1 className="text-2xl font-medium tracking-tight text-foreground">
             Risk Sentinel
           </h1>
-          <p className="text-sm text-muted-foreground mt-1 leading-relaxed max-w-md">
-            Live health factors across all active loans, priced against on-chain
-            oracle reserves. Positions below the threshold are eligible for
-            autonomous liquidation.
-          </p>
         </div>
 
         <button
           onClick={scan}
           disabled={isLoading}
-          className="inline-flex items-center gap-2 self-start sm:self-auto rounded-lg border border-border px-3.5 py-2 text-sm text-muted-foreground hover:text-foreground hover:border-foreground/40 transition-colors disabled:opacity-60"
+          className="inline-flex items-center gap-2 self-start sm:self-auto rounded-xl bg-surface-2 px-3.5 py-2 text-xs text-muted-foreground hover:text-foreground transition-all disabled:opacity-50"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? "animate-spin" : ""}`} />
           <span>Refresh</span>

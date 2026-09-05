@@ -376,7 +376,7 @@ export default function LendPage() {
 
           {isLoadingPools ? (
             <div className="glass-card p-12 text-center text-sm font-mono text-faint">
-              Querying Creditcoin CC3 on-chain pool reserves…
+              Querying on-chain pool reserves…
             </div>
           ) : reserves.length === 0 ? (
             <div className="glass-card p-8 text-center text-sm font-mono text-negative">
@@ -636,8 +636,8 @@ export default function LendPage() {
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Network Settlement</span>
-                <span className="text-accent">Creditcoin CC3 (Instant)</span>
+                <span className="text-muted-foreground">Settlement</span>
+                <span className="text-accent">Instant</span>
               </div>
             </div>
 
@@ -650,7 +650,7 @@ export default function LendPage() {
               {isSubmitting ? (
                 <>
                   <RefreshCw className="w-4 h-4 animate-spin" />
-                  <span>Settling On Creditcoin CC3…</span>
+                  <span>Settling on-chain…</span>
                 </>
               ) : !userAddress ? (
                 <span>Connect Wallet to {mode === "supply" ? "Deposit" : "Withdraw"}</span>

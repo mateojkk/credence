@@ -17,14 +17,13 @@ import {
   PoolReserveData,
 } from "@/lib/web3";
 import { useToast } from "@/components/Toast";
-import { CONTRACT_ADDRESSES, NETWORKS } from "@/lib/constants";
+import { CONTRACT_ADDRESSES } from "@/lib/constants";
 import {
   ArrowRight,
   ArrowUpRight,
   Coins,
   Wallet,
   RefreshCw,
-  ExternalLink,
   Plus,
   X,
 } from "lucide-react";
@@ -212,24 +211,6 @@ export default function OverviewPage() {
           <h1 className="text-2xl font-medium tracking-tight text-foreground">
             Overview
           </h1>
-          {userAddress && (
-            <p className="text-sm text-muted-foreground mt-1 font-mono">
-              <span className="flex items-center gap-2">
-                <span>Account:</span>
-                <span className="text-foreground">
-                  {userAddress.slice(0, 10)}…{userAddress.slice(-8)}
-                </span>
-                <a
-                  href={`${NETWORKS.CREDITCOIN_TESTNET.explorer}/address/${userAddress}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-accent hover:underline inline-flex items-center gap-0.5"
-                >
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              </span>
-            </p>
-          )}
         </div>
 
         {/* Quick actions top rail */}

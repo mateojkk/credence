@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { CreditScoreGauge } from "@/components/CreditScoreGauge";
 import { CONTRACT_ADDRESSES, NETWORKS, TIER_CONFIG } from "@/lib/constants";
 import {
@@ -12,7 +13,6 @@ import {
   connectBrowserWallet,
   CreditProfileData,
   UserLoanData,
-  requestFaucetTokens,
   formatTransactionError,
 } from "@/lib/web3";
 import {
@@ -21,9 +21,7 @@ import {
   ShieldCheck,
   AlertCircle,
   Clock,
-  CheckCircle2,
   RefreshCw,
-  ExternalLink,
   Coins,
   DollarSign,
   TrendingDown,
@@ -60,7 +58,6 @@ export default function BorrowPage() {
   const [txHash, setTxHash] = useState<string | null>(null);
   const [txError, setTxError] = useState<string | null>(null);
   const [repayingLoanId, setRepayingLoanId] = useState<number | null>(null);
-  const [isDemoMode, setIsDemoMode] = useState(false);
 
   const collateralPrice = collateralToken === "xCTC" ? 2.5 : 1.0;
   const borrowPrice = borrowToken === "xUSDC" ? 1.0 : 2.5;
@@ -105,28 +102,23 @@ export default function BorrowPage() {
         .then((accounts: string[]) => {
           if (accounts && accounts.length > 0) {
             setUserAddress(accounts[0]);
-            setIsDemoMode(false);
             loadUserData(accounts[0]);
           } else {
             setUserAddress("");
-            setIsDemoMode(false);
             loadUserData("");
           }
         })
         .catch(() => {
           setUserAddress("");
-          setIsDemoMode(false);
           loadUserData("");
         });
 
       const onAccountsChanged = (accounts: string[]) => {
         if (accounts && accounts.length > 0) {
           setUserAddress(accounts[0]);
-          setIsDemoMode(false);
           loadUserData(accounts[0]);
         } else {
           setUserAddress("");
-          setIsDemoMode(false);
           loadUserData("");
         }
       };
@@ -137,7 +129,6 @@ export default function BorrowPage() {
       };
     } else {
       setUserAddress("");
-      setIsDemoMode(false);
       loadUserData("");
     }
   }, []);
@@ -213,23 +204,6 @@ export default function BorrowPage() {
     }
   };
 
-  const handleGetFaucetCollateral = async () => {
-    if (!userAddress) {
-      toast.info("Connect Wallet", "Please connect your wallet first.");
-      return;
-    }
-    try {
-      const tokenAddr = collateralToken === "xCTC" ? CONTRACT_ADDRESSES.xCTC : CONTRACT_ADDRESSES.xUSDC;
-      const receipt = await requestFaucetTokens(tokenAddr, userAddress, 2000);
-      toast.success("Faucet Minted!", `Minted 2,000 ${collateralToken} testnet tokens.`, receipt?.hash);
-      await loadUserData(userAddress);
-    } catch (e: any) {
-      const errMsg = formatTransactionError(e);
-      setTxError(errMsg);
-      toast.error("Faucet Error", errMsg);
-    }
-  };
-
   return (
     <div className="space-y-8 max-w-6xl mx-auto">
       {/* Page Header */}
@@ -239,9 +213,6 @@ export default function BorrowPage() {
             Borrow
           </h1>
           <p className="text-muted-foreground text-sm mt-1">
-            {isDemoMode && (
-              <span className="text-faint">(demo address) </span>
-            )}
             Lock collateral to borrow against your attested credit ·{" "}
             <span className="text-accent">{profile.tierName}</span>{" "}
             <span className="tnum">· {profile.maxLtv}% max LTV</span>
@@ -268,13 +239,6 @@ export default function BorrowPage() {
                 <span>1. Provide Collateral</span>
                 <span className={hasInsufficientCollateral ? "text-amber-400 font-bold" : ""}>
                   Balance: {userCollateralBalance.toFixed(2)} {collateralToken}
-                  <button
-                    type="button"
-                    onClick={handleGetFaucetCollateral}
-                    className="ml-2 text-accent hover:underline lowercase font-normal"
-                  >
-                    (+ faucet)
-                  </button>
                 </span>
               </div>
               <div className="flex items-center gap-3 p-3 rounded-2xl bg-surface-2">
@@ -316,16 +280,15 @@ export default function BorrowPage() {
                   <div className="flex items-center gap-2">
                     <AlertCircle className="w-4 h-4 flex-shrink-0 text-amber-400" />
                     <span>
-                      Insufficient {collateralToken} balance (You have {userCollateralBalance.toFixed(2)}, need {numCollateral.toFixed(2)})
+                      Insufficient {collateralToken} balance (Have {userCollateralBalance.toFixed(2)}, need {numCollateral.toFixed(2)})
                     </span>
                   </div>
-                  <button
-                    type="button"
-                    onClick={handleGetFaucetCollateral}
-                    className="px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 font-semibold text-[11px] transition-colors"
+                  <Link
+                    href="/faucet"
+                    className="px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 font-medium text-[11px] transition-colors font-mono"
                   >
-                    Claim 2,000 {collateralToken}
-                  </button>
+                    Get tokens in Faucet →
+                  </Link>
                 </div>
               )}
               <div className="text-right text-xs font-mono text-muted-foreground">
@@ -407,24 +370,6 @@ export default function BorrowPage() {
               </div>
             </div>
 
-            {/* Notifications */}
-            {txHash && (
-              <div className="p-4 rounded-2xl bg-positive/10 flex items-center justify-between text-xs font-mono text-positive">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-positive" />
-                  <span>Loan Originated on Creditcoin CC3!</span>
-                </div>
-                <a
-                  href={`${NETWORKS.CREDITCOIN_TESTNET.explorer}/tx/${txHash}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-1 hover:underline text-positive"
-                >
-                  <span>Explorer</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              </div>
-            )}
 
             {txError && (
               <div className="p-4 rounded-2xl bg-negative/10 flex items-center gap-2 text-xs font-mono text-negative">

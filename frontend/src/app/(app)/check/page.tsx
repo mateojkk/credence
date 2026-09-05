@@ -86,12 +86,8 @@ export default function DashboardPage() {
       {/* Page purpose */}
       <header>
         <h1 className="text-2xl font-medium tracking-tight text-foreground">
-          Address checker
+          Credit check
         </h1>
-        <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
-          Look up any wallet to see the credit its verified repayment history
-          has earned on Creditcoin, and what it can borrow with.
-        </p>
       </header>
 
       {/* Single primary interaction: scan */}
@@ -102,7 +98,7 @@ export default function DashboardPage() {
             type="text"
             value={lookupAddress}
             onChange={(e) => setLookupAddress(e.target.value)}
-            placeholder="0x… enter any address to scan on Creditcoin"
+            placeholder="0x… enter any address to scan"
             className="w-full bg-surface-2 rounded-xl pl-10 pr-4 py-3 text-sm font-mono text-foreground placeholder-faint focus:outline-none transition-colors"
           />
         </div>
@@ -115,23 +111,6 @@ export default function DashboardPage() {
           {isLoadingProfile ? <RefreshCw className="w-4 h-4 animate-spin" /> : "Scan"}
         </button>
       </form>
-
-      {/* Connected wallet shortcut */}
-      {connectedAddress && (
-        <div className="flex items-center gap-2 text-xs">
-          <span className="text-faint">Connected wallet:</span>
-          <button
-            type="button"
-            onClick={() => {
-              setLookupAddress(connectedAddress);
-              loadProfile(connectedAddress);
-            }}
-            className="px-2.5 py-1 rounded-full bg-surface-2 text-muted-foreground hover:text-foreground transition-colors font-mono"
-          >
-            {connectedAddress.slice(0, 8)}...{connectedAddress.slice(-6)}
-          </button>
-        </div>
-      )}
 
       {/* Result: one card, clear hierarchy */}
       <section className="glass-card p-6 sm:p-8">

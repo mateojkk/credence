@@ -6,8 +6,6 @@ import {
   RefreshCw,
   Sparkles,
   ExternalLink,
-  CheckCircle2,
-  AlertCircle,
   ArrowRight,
   ArrowUpRight,
   Plus,
@@ -15,6 +13,7 @@ import {
   Check,
 } from "lucide-react";
 import { CONTRACT_ADDRESSES, NETWORKS } from "@/lib/constants";
+import { useToast } from "@/components/Toast";
 import {
   fetchUserBalances,
   requestFaucetTokens,
@@ -23,6 +22,7 @@ import {
 } from "@/lib/web3";
 
 export default function FaucetPage() {
+  const toast = useToast();
   const [userAddress, setUserAddress] = useState<string>("");
   const [balances, setBalances] = useState({ nativeCTC: 0, xUSDC: 0, xCTC: 0 });
   const [isLoading, setIsLoading] = useState(false);
@@ -34,9 +34,6 @@ export default function FaucetPage() {
   const [isMintingBundle, setIsMintingBundle] = useState(false);
 
   // Status feedback
-  const [txHash, setTxHash] = useState<string | null>(null);
-  const [txSuccessMessage, setTxSuccessMessage] = useState<string | null>(null);
-  const [txError, setTxError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [addedToken, setAddedToken] = useState<string | null>(null);
 
@@ -85,23 +82,23 @@ export default function FaucetPage() {
 
   const handleMint = async (tokenSymbol: "xCTC" | "xUSDC", amount: number) => {
     if (!userAddress) {
-      setTxError("Please connect your wallet first to mint testnet tokens.");
+      toast.info("Connect Wallet", "Please connect your wallet to mint testnet tokens.");
       return;
     }
-    setTxError(null);
-    setTxHash(null);
-    setTxSuccessMessage(null);
     setMintingToken(tokenSymbol);
 
     try {
       const tokenAddress = tokenSymbol === "xCTC" ? CONTRACT_ADDRESSES.xCTC : CONTRACT_ADDRESSES.xUSDC;
       const receipt = await requestFaucetTokens(tokenAddress, userAddress, amount);
-      setTxHash(receipt.hash);
-      setTxSuccessMessage(`Minted ${amount.toLocaleString()} ${tokenSymbol} to your wallet.`);
+      toast.success(
+        "Tokens Minted!",
+        `Minted ${amount.toLocaleString()} ${tokenSymbol} to your wallet.`,
+        receipt?.hash
+      );
       await loadUserData(userAddress);
     } catch (err: any) {
       console.error("Faucet mint error:", err);
-      setTxError(formatTransactionError(err));
+      toast.error("Mint Failed", formatTransactionError(err));
     } finally {
       setMintingToken(null);
     }
@@ -109,24 +106,24 @@ export default function FaucetPage() {
 
   const handleMintBundle = async () => {
     if (!userAddress) {
-      setTxError("Please connect your wallet first to claim the Starter Pack.");
+      toast.info("Connect Wallet", "Please connect your wallet first to claim the Starter Pack.");
       return;
     }
-    setTxError(null);
-    setTxHash(null);
-    setTxSuccessMessage(null);
     setIsMintingBundle(true);
 
     try {
       await requestFaucetTokens(CONTRACT_ADDRESSES.xCTC, userAddress, 2000);
       const receiptUSDC = await requestFaucetTokens(CONTRACT_ADDRESSES.xUSDC, userAddress, 2000);
 
-      setTxHash(receiptUSDC.hash);
-      setTxSuccessMessage("Starter pack claimed: 2,000 xCTC + 2,000 xUSDC minted.");
+      toast.success(
+        "Starter Pack Claimed!",
+        "Minted 2,000 xCTC + 2,000 xUSDC directly to your wallet.",
+        receiptUSDC?.hash
+      );
       await loadUserData(userAddress);
     } catch (err: any) {
       console.error("Bundle mint error:", err);
-      setTxError(formatTransactionError(err));
+      toast.error("Claim Failed", formatTransactionError(err));
     } finally {
       setIsMintingBundle(false);
     }
@@ -195,9 +192,9 @@ export default function FaucetPage() {
               <span className="text-faint">Wallet not connected</span>
             )}
           </div>
-          <div className="flex items-center gap-2 text-faint">
-            <span className="w-1.5 h-1.5 rounded-full bg-positive" />
-            <span>Creditcoin CC3 (102031)</span>
+          <div className="flex items-center gap-1.5 text-xs text-positive font-mono">
+            <span className="w-1.5 h-1.5 rounded-full bg-positive animate-pulse" />
+            <span>Connected</span>
           </div>
         </div>
 
@@ -239,34 +236,6 @@ export default function FaucetPage() {
           </div>
         </div>
       </section>
-
-      {/* Notifications */}
-      {txSuccessMessage && (
-        <div className="rounded-xl bg-positive/10 px-4 py-3 text-xs font-mono text-positive flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 shrink-0" />
-            <span>{txSuccessMessage}</span>
-          </div>
-          {txHash && (
-            <a
-              href={`${explorer}/tx/${txHash}`}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-positive hover:underline shrink-0"
-            >
-              <span>Explorer</span>
-              <ExternalLink className="w-3 h-3" />
-            </a>
-          )}
-        </div>
-      )}
-
-      {txError && (
-        <div className="rounded-xl bg-negative/10 px-4 py-3 text-xs font-mono text-negative flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 shrink-0" />
-          <span>{txError}</span>
-        </div>
-      )}
 
       {/* 1-Click Starter Pack Banner */}
       <section className="glass-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
@@ -512,7 +481,7 @@ export default function FaucetPage() {
         <div className="space-y-0.5">
           <div className="text-sm font-medium text-foreground">Need native CTC for gas?</div>
           <p className="text-xs text-muted-foreground">
-            Creditcoin CC3 Testnet transactions require native CTC to cover network execution fees.
+            Transactions require native CTC to cover network execution fees.
           </p>
         </div>
         <a
